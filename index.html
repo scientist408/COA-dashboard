@@ -2,7 +2,11 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
 
   <title>COA Dashboard Demo</title>
 
@@ -19,7 +23,8 @@
       --yellow: #f7c948;
       --red: #d64545;
       --green: #2c9b63;
-      --shadow: 0 8px 28px rgba(25, 55, 80, 0.10);
+      --purple: #7657a6;
+      --shadow: 0 8px 28px rgba(25, 55, 80, 0.1);
     }
 
     * {
@@ -34,14 +39,18 @@
     }
 
     .topbar {
-      background: linear-gradient(135deg, var(--navy), var(--blue));
-      color: white;
-      padding: 18px 24px;
       display: flex;
       justify-content: space-between;
       align-items: center;
       gap: 15px;
       flex-wrap: wrap;
+      padding: 18px 24px;
+      color: white;
+      background: linear-gradient(
+        135deg,
+        var(--navy),
+        var(--blue)
+      );
       box-shadow: var(--shadow);
     }
 
@@ -53,20 +62,20 @@
     .topbar p {
       margin: 5px 0 0;
       font-size: 13px;
-      opacity: 0.85;
+      opacity: 0.88;
     }
 
     .demo-badge {
-      background: white;
-      color: var(--navy);
       padding: 8px 14px;
       border-radius: 30px;
-      font-weight: bold;
+      background: white;
+      color: var(--navy);
       font-size: 12px;
+      font-weight: bold;
     }
 
     .container {
-      max-width: 1550px;
+      max-width: 1600px;
       margin: auto;
       padding: 22px;
     }
@@ -81,7 +90,10 @@
 
     .toolbar {
       display: grid;
-      grid-template-columns: repeat(6, minmax(140px, 1fr));
+      grid-template-columns:
+        repeat(5, minmax(145px, 1fr))
+        auto
+        auto;
       gap: 12px;
       align-items: end;
       padding: 16px;
@@ -91,9 +103,9 @@
     .field label {
       display: block;
       margin-bottom: 6px;
+      color: var(--muted);
       font-size: 12px;
       font-weight: bold;
-      color: var(--muted);
     }
 
     select,
@@ -104,6 +116,7 @@
       border: 1px solid var(--border);
       border-radius: 8px;
       background: white;
+      color: var(--text);
       font-size: 14px;
     }
 
@@ -120,6 +133,10 @@
       cursor: pointer;
     }
 
+    button:hover:not(:disabled) {
+      filter: brightness(0.96);
+    }
+
     .btn-primary {
       background: var(--blue);
       color: white;
@@ -130,39 +147,50 @@
       color: var(--navy);
     }
 
+    .btn-reset-data {
+      background: #7d3c3c;
+      color: white;
+    }
+
     .btn-assign {
+      padding: 7px 11px;
       background: var(--navy);
       color: white;
-      padding: 7px 11px;
       font-size: 12px;
     }
 
     .btn-disabled {
+      padding: 7px 11px;
       background: #d8e0e7;
       color: #77838e;
       cursor: not-allowed;
-      padding: 7px 11px;
       font-size: 12px;
     }
 
-    button:hover:not(:disabled) {
-      filter: brightness(0.96);
+    .date-message {
+      margin-top: 14px;
+      padding: 12px 15px;
+      border-left: 5px solid var(--blue);
+      border-radius: 10px;
+      background: #eaf4fb;
+      font-size: 13px;
+      line-height: 1.45;
     }
 
     .kpi-section {
-      margin-top: 18px;
-      padding: 16px;
-      border-radius: 14px;
       display: grid;
       grid-template-columns: repeat(6, minmax(150px, 1fr));
       gap: 12px;
+      margin-top: 18px;
+      padding: 16px;
+      border-radius: 14px;
     }
 
     .kpi {
-      background: #f8fbfd;
+      padding: 14px;
       border-left: 5px solid var(--blue);
       border-radius: 10px;
-      padding: 14px;
+      background: #f8fbfd;
     }
 
     .kpi.warning {
@@ -177,9 +205,13 @@
       border-left-color: var(--green);
     }
 
+    .kpi.purple {
+      border-left-color: var(--purple);
+    }
+
     .kpi-label {
-      font-size: 12px;
       color: var(--muted);
+      font-size: 12px;
       font-weight: bold;
     }
 
@@ -190,43 +222,43 @@
     }
 
     .workflow {
-      margin-top: 18px;
       display: grid;
       grid-template-columns: repeat(5, 1fr);
       gap: 10px;
+      margin-top: 18px;
     }
 
     .workflow-step {
       position: relative;
       min-height: 110px;
-      background: white;
+      padding: 14px;
       border: 1px solid var(--border);
       border-radius: 12px;
-      padding: 14px;
+      background: white;
       box-shadow: var(--shadow);
     }
 
     .workflow-step:not(:last-child)::after {
       content: "→";
       position: absolute;
-      right: -18px;
       top: 38%;
+      right: -18px;
+      z-index: 2;
       color: var(--blue);
       font-size: 25px;
       font-weight: bold;
-      z-index: 2;
     }
 
     .step-number {
-      width: 29px;
-      height: 29px;
       display: grid;
       place-items: center;
+      width: 29px;
+      height: 29px;
+      margin-bottom: 8px;
       border-radius: 50%;
       background: var(--blue);
       color: white;
       font-weight: bold;
-      margin-bottom: 8px;
     }
 
     .workflow-step b {
@@ -250,8 +282,8 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      flex-wrap: wrap;
       gap: 12px;
+      flex-wrap: wrap;
       padding: 16px 18px;
       border-bottom: 1px solid var(--border);
       background: #fbfdff;
@@ -271,6 +303,7 @@
     .legend {
       display: flex;
       gap: 14px;
+      flex-wrap: wrap;
       font-size: 12px;
     }
 
@@ -282,16 +315,20 @@
       border-radius: 50%;
     }
 
-    .green {
+    .green-dot {
       background: var(--green);
     }
 
-    .yellow {
+    .yellow-dot {
       background: var(--yellow);
     }
 
-    .red {
+    .red-dot {
       background: var(--red);
+    }
+
+    .purple-dot {
+      background: var(--purple);
     }
 
     .table-wrapper {
@@ -300,7 +337,7 @@
 
     table {
       width: 100%;
-      min-width: 1500px;
+      min-width: 1680px;
       border-collapse: collapse;
       font-size: 12px;
     }
@@ -320,8 +357,8 @@
     td {
       padding: 8px 7px;
       border: 1px solid #c3cbd2;
-      text-align: center;
       background: white;
+      text-align: center;
       white-space: nowrap;
     }
 
@@ -344,8 +381,8 @@
 
     .status {
       display: inline-block;
-      border-radius: 20px;
       padding: 4px 8px;
+      border-radius: 20px;
       font-weight: bold;
     }
 
@@ -369,6 +406,11 @@
       color: #123a5a;
     }
 
+    .status-backup {
+      background: #eee5fb;
+      color: #54347d;
+    }
+
     .urgency {
       font-size: 18px;
     }
@@ -377,6 +419,29 @@
       width: 18px;
       height: 18px;
       cursor: pointer;
+    }
+
+    .visibility-label {
+      display: inline-block;
+      padding: 4px 7px;
+      border-radius: 15px;
+      font-size: 11px;
+      font-weight: bold;
+    }
+
+    .primary-label {
+      background: #dcecf8;
+      color: #123a5a;
+    }
+
+    .backup-label {
+      background: #eee5fb;
+      color: #54347d;
+    }
+
+    .superuser-label {
+      background: #e5e9ed;
+      color: #394954;
     }
 
     .modal {
@@ -391,12 +456,12 @@
     }
 
     .modal-card {
-      width: min(680px, 100%);
+      width: min(700px, 100%);
       max-height: 92vh;
       overflow-y: auto;
-      background: white;
-      border-radius: 16px;
       padding: 21px;
+      border-radius: 16px;
+      background: white;
       box-shadow: var(--shadow);
     }
 
@@ -415,10 +480,10 @@
     }
 
     .modal-actions {
-      margin-top: 18px;
       display: flex;
       justify-content: flex-end;
       gap: 10px;
+      margin-top: 18px;
     }
 
     .assignment-summary {
@@ -475,7 +540,7 @@
       right: 20px;
       bottom: 20px;
       z-index: 200;
-      max-width: 390px;
+      max-width: 420px;
       padding: 13px 17px;
       border-radius: 10px;
       background: #17212b;
@@ -483,7 +548,14 @@
       box-shadow: var(--shadow);
     }
 
-    @media (max-width: 1050px) {
+    .empty-message {
+      padding: 30px;
+      color: var(--muted);
+      text-align: center;
+      font-size: 14px;
+    }
+
+    @media (max-width: 1200px) {
       .toolbar {
         grid-template-columns: repeat(3, 1fr);
       }
@@ -491,7 +563,9 @@
       .kpi-section {
         grid-template-columns: repeat(3, 1fr);
       }
+    }
 
+    @media (max-width: 1050px) {
       .workflow {
         grid-template-columns: 1fr;
       }
@@ -511,10 +585,7 @@
       }
 
       .toolbar,
-      .kpi-section {
-        grid-template-columns: 1fr 1fr;
-      }
-
+      .kpi-section,
       .form-grid,
       .assignment-summary {
         grid-template-columns: 1fr;
@@ -525,204 +596,80 @@
 
 <body>
 
-<header class="topbar">
-  <div>
-    <h1>COA Dashboard</h1>
-    <p>Certificate of Analysis workflow, ownership, reminders and escalation demo</p>
-  </div>
+  <header class="topbar">
+    <div>
+      <h1>COA Dashboard</h1>
 
-  <div class="demo-badge">DEMO DATA</div>
-</header>
-
-<main class="container">
-
-  <section class="toolbar">
-
-    <div class="field">
-      <label for="roleFilter">Dashboard User</label>
-
-      <select id="roleFilter">
-        <option value="Superuser">Superuser — All Plants</option>
-        <option value="Josh">Josh — Superuser</option>
-        <option value="Raj">Raj — Primary QC</option>
-        <option value="Ram">Ram — Primary QC</option>
-        <option value="Jasdip">Jasdip — Backup QC</option>
-      </select>
+      <p>
+        Certificate of Analysis workflow, ownership,
+        reminders and escalation demo
+      </p>
     </div>
 
-    <div class="field">
-      <label for="plantFilter">Plant</label>
-
-      <select id="plantFilter">
-        <option value="All">All Plants</option>
-        <option value="1002">1002</option>
-        <option value="1006">1006</option>
-        <option value="1011">1011</option>
-      </select>
+    <div class="demo-badge">
+      DEMO DATA
     </div>
+  </header>
 
-    <div class="field">
-      <label for="statusFilter">COA Status</label>
+  <main class="container">
 
-      <select id="statusFilter">
-        <option value="All">All Statuses</option>
-        <option value="Pending">Pending</option>
-        <option value="Escalated">Escalated</option>
-        <option value="Assigned by Superuser">Assigned by Superuser</option>
-        <option value="Complete">Complete</option>
-      </select>
-    </div>
-
-    <div class="field">
-      <label for="searchInput">Search</label>
-      <input id="searchInput" placeholder="Lot, bottle, customer...">
-    </div>
-
-    <button class="btn-secondary" id="resetButton">
-      Reset Filters
-    </button>
-
-    <button class="btn-primary" id="manualRequestButton">
-      + Manual COA Request
-    </button>
-
-  </section>
-
-  <section class="kpi-section">
-
-    <div class="kpi">
-      <div class="kpi-label">Visible COAs</div>
-      <div class="kpi-value" id="visibleCount">0</div>
-    </div>
-
-    <div class="kpi warning">
-      <div class="kpi-label">Pending</div>
-      <div class="kpi-value" id="pendingCount">0</div>
-    </div>
-
-    <div class="kpi danger">
-      <div class="kpi-label">Escalated</div>
-      <div class="kpi-value" id="escalatedCount">0</div>
-    </div>
-
-    <div class="kpi success">
-      <div class="kpi-label">Completed</div>
-      <div class="kpi-value" id="completedCount">0</div>
-    </div>
-
-    <div class="kpi">
-      <div class="kpi-label">Due Today</div>
-      <div class="kpi-value" id="dueTodayCount">0</div>
-    </div>
-
-    <div class="kpi">
-      <div class="kpi-label">Completion Rate</div>
-      <div class="kpi-value" id="completionRate">0%</div>
-    </div>
-
-  </section>
-
-  <section class="workflow">
-
-    <div class="workflow-step">
-      <div class="step-number">1</div>
-      <b>SAP / Production Log</b>
-      <span>Production data is automatically added after the lot is completed.</span>
-    </div>
-
-    <div class="workflow-step">
-      <div class="step-number">2</div>
-      <b>QC Assignment</b>
-      <span>Primary and backup QC users are assigned based on the plant.</span>
-    </div>
-
-    <div class="workflow-step">
-      <div class="step-number">3</div>
-      <b>Deadline Created</b>
-      <span>The system creates a COA deadline, typically 24 hours after production ends.</span>
-    </div>
-
-    <div class="workflow-step">
-      <div class="step-number">4</div>
-      <b>Reminder and Escalation</b>
-      <span>The system sends reminders and escalates overdue COAs.</span>
-    </div>
-
-    <div class="workflow-step">
-      <div class="step-number">5</div>
-      <b>COA Submitted</b>
-      <span>QC checks completion and the task is removed from the active queue.</span>
-    </div>
-
-  </section>
-
-  <section class="panel">
-
-    <div class="panel-header">
-
-      <div>
-        <h2 id="dashboardTitle">Superuser Dashboard</h2>
-        <p id="dashboardSubtitle">Showing all COA tasks across all plants.</p>
-      </div>
-
-      <div class="legend">
-        <span><i class="legend-dot green"></i>On track</span>
-        <span><i class="legend-dot yellow"></i>Due soon</span>
-        <span><i class="legend-dot red"></i>Escalated</span>
-      </div>
-
-    </div>
-
-    <div class="table-wrapper">
-
-      <table>
-
-        <thead>
-          <tr>
-            <th>Plant</th>
-            <th>Machine #</th>
-            <th>Bottle Description</th>
-            <th>Customer</th>
-            <th>Lot #</th>
-            <th>Start Date</th>
-            <th>End Date</th>
-            <th>Order Qty</th>
-            <th>Qty Produced</th>
-            <th>COA Status</th>
-            <th>Primary QC</th>
-            <th>Backup QC</th>
-            <th>COA Deadline</th>
-            <th>Reminder Sent</th>
-            <th>Escalation Status</th>
-            <th>Urgency</th>
-            <th>COA Submitted</th>
-            <th>Superuser Action</th>
-          </tr>
-        </thead>
-
-        <tbody id="dashboardBody"></tbody>
-
-      </table>
-
-    </div>
-
-  </section>
-
-</main>
-
-<!-- Manual COA Request Modal -->
-
-<div class="modal" id="manualRequestModal">
-
-  <div class="modal-card">
-
-    <h3>Manual COA Request</h3>
-
-    <div class="form-grid">
+    <section class="toolbar">
 
       <div class="field">
-        <label>Plant</label>
-        <select id="manualPlant">
+        <label for="roleFilter">
+          Dashboard User
+        </label>
+
+        <select id="roleFilter">
+          <option value="Superuser">
+            Superuser — All Plants
+          </option>
+
+          <option value="Josh">
+            Josh — Superuser
+          </option>
+
+          <option value="Raj">
+            Raj — Primary QC
+          </option>
+
+          <option value="Ram">
+            Ram — Primary QC
+          </option>
+
+          <option value="Jasdip">
+            Jasdip — Backup QC
+          </option>
+
+          <option value="Pritesh">
+            Pritesh — QC
+          </option>
+
+          <option value="Kiran">
+            Kiran — QC
+          </option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label for="dashboardDate">
+          Dashboard Date
+        </label>
+
+        <input
+          id="dashboardDate"
+          type="date"
+          value="2025-12-08"
+        >
+      </div>
+
+      <div class="field">
+        <label for="plantFilter">
+          Plant
+        </label>
+
+        <select id="plantFilter">
+          <option value="All">All Plants</option>
           <option value="1002">1002</option>
           <option value="1006">1006</option>
           <option value="1011">1011</option>
@@ -730,925 +677,2137 @@
       </div>
 
       <div class="field">
-        <label>Machine</label>
-        <input id="manualMachine" placeholder="Example: A">
-      </div>
+        <label for="statusFilter">
+          COA Status
+        </label>
 
-      <div class="field">
-        <label>Bottle Description</label>
-        <input id="manualBottle" placeholder="Example: 35oz Red Brick">
-      </div>
+        <select id="statusFilter">
+          <option value="All">All Statuses</option>
+          <option value="Pending">Pending</option>
+          <option value="Escalated">Escalated</option>
 
-      <div class="field">
-        <label>Customer</label>
-        <input id="manualCustomer" placeholder="Example: P&G">
-      </div>
+          <option value="Assigned by Superuser">
+            Assigned by Superuser
+          </option>
 
-      <div class="field">
-        <label>Lot Number</label>
-        <input id="manualLot" placeholder="Example: AXSM-1025">
-      </div>
-
-      <div class="field">
-        <label>Quantity Shipped</label>
-        <input id="manualQuantity" type="number" value="75000">
-      </div>
-
-      <div class="field">
-        <label>Primary QC</label>
-
-        <select id="manualPrimary">
-          <option value="Raj">Raj</option>
-          <option value="Ram">Ram</option>
-          <option value="Jasdip">Jasdip</option>
-          <option value="Pritesh">Pritesh</option>
-          <option value="Kiran">Kiran</option>
+          <option value="Complete">Complete</option>
         </select>
       </div>
 
       <div class="field">
-        <label>Backup QC</label>
+        <label for="searchInput">
+          Search
+        </label>
 
-        <select id="manualBackup">
-          <option value="Jasdip">Jasdip</option>
-          <option value="Raj">Raj</option>
-          <option value="Ram">Ram</option>
-          <option value="Pritesh">Pritesh</option>
-          <option value="Kiran">Kiran</option>
-        </select>
+        <input
+          id="searchInput"
+          placeholder="Lot, bottle, customer..."
+        >
       </div>
 
-    </div>
-
-    <div class="modal-actions">
-      <button class="btn-secondary" id="cancelManualButton">
-        Cancel
+      <button
+        class="btn-secondary"
+        id="resetFiltersButton"
+      >
+        Reset Filters
       </button>
 
-      <button class="btn-primary" id="submitManualButton">
-        Submit COA Request
-      </button>
-    </div>
-
-  </div>
-
-</div>
-
-<!-- Superuser Assignment Modal -->
-
-<div class="modal" id="assignmentModal">
-
-  <div class="modal-card">
-
-    <h3>COA Assignment Manager</h3>
-
-    <div class="assignment-summary">
-
-      <div>
-        <b>Plant</b>
-        <span id="assignmentPlant"></span>
-      </div>
-
-      <div>
-        <b>Machine</b>
-        <span id="assignmentMachine"></span>
-      </div>
-
-      <div>
-        <b>Bottle Description</b>
-        <span id="assignmentBottle"></span>
-      </div>
-
-      <div>
-        <b>Lot Number</b>
-        <span id="assignmentLot"></span>
-      </div>
-
-      <div>
-        <b>Current Primary QC</b>
-        <span id="assignmentCurrentOwner"></span>
-      </div>
-
-      <div>
-        <b>Escalation Status</b>
-        <span id="assignmentEscalation"></span>
-      </div>
-
-    </div>
-
-    <div class="form-grid">
-
-      <div class="field">
-        <label for="assignTo">Assign COA To</label>
-
-        <select id="assignTo">
-          <option value="Raj">Raj</option>
-          <option value="Ram">Ram</option>
-          <option value="Jasdip">Jasdip</option>
-          <option value="Pritesh">Pritesh</option>
-          <option value="Kiran">Kiran</option>
-        </select>
-      </div>
-
-      <div class="field">
-        <label for="assignBackup">Backup QC</label>
-
-        <select id="assignBackup">
-          <option value="Jasdip">Jasdip</option>
-          <option value="Raj">Raj</option>
-          <option value="Ram">Ram</option>
-          <option value="Pritesh">Pritesh</option>
-          <option value="Kiran">Kiran</option>
-        </select>
-      </div>
-
-      <div class="field full-width">
-        <label for="assignmentComments">Assignment Comments</label>
-
-        <textarea
-          id="assignmentComments"
-          placeholder="Example: Reassigned due to workload, absence, vacation or plant support requirement."
-        ></textarea>
-      </div>
-
-    </div>
-
-    <div class="check-option">
-      <label>
-        <input type="checkbox" id="notifyNewOwner" checked>
-        Notify new assignee
-      </label>
-    </div>
-
-    <div class="check-option">
-      <label>
-        <input type="checkbox" id="notifyOriginalOwner" checked>
-        Notify original owner
-      </label>
-    </div>
-
-    <h4>Assignment History</h4>
-
-    <div class="history-list" id="assignmentHistory">
-      <div class="history-item">No previous assignment history.</div>
-    </div>
-
-    <div class="modal-actions">
-
-      <button class="btn-secondary" id="cancelAssignmentButton">
-        Cancel
+      <button
+        class="btn-primary"
+        id="manualRequestButton"
+      >
+        + Manual COA Request
       </button>
 
-      <button class="btn-primary" id="saveAssignmentButton">
-        Assign COA
-      </button>
+    </section>
 
-    </div>
+    <div
+      class="date-message"
+      id="dateMessage"
+    ></div>
 
-  </div>
+    <section class="kpi-section">
 
-</div>
-
-<div class="toast" id="toast"></div>
-
-<script>
-  const initialData = [
-    {
-      id: 1,
-      plant: "1002",
-      machine: "A",
-      bottle: "51.5oz Polaris",
-      customer: "P&G",
-      lot: "AXSM-1001",
-      startDate: "12/7/2025",
-      endDate: "12/8/2025",
-      orderQuantity: 80000,
-      quantityProduced: 80000,
-      status: "Pending",
-      primaryQC: "Raj",
-      backupQC: "Jasdip, Ram",
-      deadline: "12/9/2025",
-      reminder: "Not Sent",
-      escalation: "Not Escalated",
-      urgency: "yellow",
-      submitted: false,
-      assignmentHistory: []
-    },
-    {
-      id: 2,
-      plant: "1002",
-      machine: "B",
-      bottle: "35oz Red Brick",
-      customer: "P&G",
-      lot: "AXSM-1002",
-      startDate: "12/7/2025",
-      endDate: "12/8/2025",
-      orderQuantity: 90000,
-      quantityProduced: 90000,
-      status: "Pending",
-      primaryQC: "Raj",
-      backupQC: "Jasdip, Ram",
-      deadline: "12/9/2025",
-      reminder: "Not Sent",
-      escalation: "Not Escalated",
-      urgency: "green",
-      submitted: false,
-      assignmentHistory: []
-    },
-    {
-      id: 3,
-      plant: "1002",
-      machine: "C",
-      bottle: "10oz Tide Original",
-      customer: "P&G",
-      lot: "AXSM-1003",
-      startDate: "12/6/2025",
-      endDate: "12/8/2025",
-      orderQuantity: 80000,
-      quantityProduced: 80000,
-      status: "Pending",
-      primaryQC: "Raj",
-      backupQC: "Jasdip, Ram",
-      deadline: "12/9/2025",
-      reminder: "Not Sent",
-      escalation: "Not Escalated",
-      urgency: "green",
-      submitted: false,
-      assignmentHistory: []
-    },
-    {
-      id: 4,
-      plant: "1002",
-      machine: "D",
-      bottle: "32oz White Oval",
-      customer: "P&G",
-      lot: "AXSM-1004",
-      startDate: "12/6/2025",
-      endDate: "12/8/2025",
-      orderQuantity: 70000,
-      quantityProduced: 70000,
-      status: "Escalated",
-      primaryQC: "Raj",
-      backupQC: "Jasdip, Ram",
-      deadline: "12/8/2025",
-      reminder: "12/9/2025",
-      escalation: "Escalated",
-      urgency: "red",
-      submitted: false,
-      assignmentHistory: []
-    },
-    {
-      id: 5,
-      plant: "1002",
-      machine: "E",
-      bottle: "64oz HDPE Handleware",
-      customer: "P&G",
-      lot: "AXSM-1005",
-      startDate: "12/7/2025",
-      endDate: "12/8/2025",
-      orderQuantity: 75000,
-      quantityProduced: 75000,
-      status: "Pending",
-      primaryQC: "Raj",
-      backupQC: "Jasdip, Ram",
-      deadline: "12/9/2025",
-      reminder: "Not Sent",
-      escalation: "Not Escalated",
-      urgency: "yellow",
-      submitted: false,
-      assignmentHistory: []
-    },
-    {
-      id: 6,
-      plant: "1011",
-      machine: "F",
-      bottle: "28oz Personal Care",
-      customer: "P&G",
-      lot: "AXSM-1006",
-      startDate: "12/7/2025",
-      endDate: "12/8/2025",
-      orderQuantity: 90000,
-      quantityProduced: 90000,
-      status: "Pending",
-      primaryQC: "Ram",
-      backupQC: "Jasdip, Raj",
-      deadline: "12/9/2025",
-      reminder: "Not Sent",
-      escalation: "Not Escalated",
-      urgency: "green",
-      submitted: false,
-      assignmentHistory: []
-    },
-    {
-      id: 7,
-      plant: "1011",
-      machine: "G",
-      bottle: "16oz Household",
-      customer: "P&G",
-      lot: "AXSM-1007",
-      startDate: "12/5/2025",
-      endDate: "12/8/2025",
-      orderQuantity: 85000,
-      quantityProduced: 85000,
-      status: "Pending",
-      primaryQC: "Ram",
-      backupQC: "Jasdip, Raj",
-      deadline: "12/9/2025",
-      reminder: "Not Sent",
-      escalation: "Not Escalated",
-      urgency: "green",
-      submitted: false,
-      assignmentHistory: []
-    },
-    {
-      id: 8,
-      plant: "1006",
-      machine: "H",
-      bottle: "32oz Detergent",
-      customer: "P&G",
-      lot: "AXSM-1008",
-      startDate: "12/7/2025",
-      endDate: "12/8/2025",
-      orderQuantity: 89000,
-      quantityProduced: 89000,
-      status: "Escalated",
-      primaryQC: "Ram",
-      backupQC: "Jasdip, Raj",
-      deadline: "12/8/2025",
-      reminder: "12/9/2025",
-      escalation: "Escalated",
-      urgency: "red",
-      submitted: false,
-      assignmentHistory: []
-    },
-    {
-      id: 9,
-      plant: "1006",
-      machine: "I",
-      bottle: "40oz Industrial",
-      customer: "P&G",
-      lot: "AXSM-1009",
-      startDate: "12/7/2025",
-      endDate: "12/8/2025",
-      orderQuantity: 99000,
-      quantityProduced: 99000,
-      status: "Complete",
-      primaryQC: "Ram",
-      backupQC: "Jasdip, Raj",
-      deadline: "12/9/2025",
-      reminder: "12/9/2025",
-      escalation: "Not Escalated",
-      urgency: "green",
-      submitted: true,
-      assignmentHistory: []
-    }
-  ];
-
-  let dashboardData =
-    JSON.parse(localStorage.getItem("coaDashboardData")) || initialData;
-
-  let activeAssignmentId = null;
-
-  const dashboardBody = document.getElementById("dashboardBody");
-  const roleFilter = document.getElementById("roleFilter");
-  const plantFilter = document.getElementById("plantFilter");
-  const statusFilter = document.getElementById("statusFilter");
-  const searchInput = document.getElementById("searchInput");
-
-  function saveData() {
-    localStorage.setItem(
-      "coaDashboardData",
-      JSON.stringify(dashboardData)
-    );
-  }
-
-  function isSuperuser() {
-    return (
-      roleFilter.value === "Superuser" ||
-      roleFilter.value === "Josh"
-    );
-  }
-
-  function urgencyIcon(urgency) {
-    if (urgency === "red") return "🔴";
-    if (urgency === "yellow") return "🟡";
-    return "🟢";
-  }
-
-  function statusClass(status) {
-    if (status === "Complete") return "status-complete";
-    if (status === "Escalated") return "status-escalated";
-    if (status === "Assigned by Superuser") return "status-assigned";
-
-    return "status-pending";
-  }
-
-  function getFilteredData() {
-    const selectedRole = roleFilter.value;
-    const selectedPlant = plantFilter.value;
-    const selectedStatus = statusFilter.value;
-    const searchText = searchInput.value.toLowerCase().trim();
-
-    return dashboardData.filter(function(row) {
-      const roleMatches =
-        isSuperuser() ||
-        row.primaryQC === selectedRole ||
-        row.backupQC.includes(selectedRole);
-
-      const plantMatches =
-        selectedPlant === "All" ||
-        row.plant === selectedPlant;
-
-      const statusMatches =
-        selectedStatus === "All" ||
-        row.status === selectedStatus;
-
-      const searchableText = [
-        row.plant,
-        row.machine,
-        row.bottle,
-        row.customer,
-        row.lot,
-        row.primaryQC,
-        row.backupQC
-      ].join(" ").toLowerCase();
-
-      const searchMatches =
-        !searchText ||
-        searchableText.includes(searchText);
-
-      return (
-        roleMatches &&
-        plantMatches &&
-        statusMatches &&
-        searchMatches
-      );
-    });
-  }
-
-  function renderDashboard() {
-    const rows = getFilteredData();
-
-    dashboardBody.innerHTML = rows.map(function(row) {
-      const rowClass = [
-        row.escalation === "Escalated" ? "escalated-row" : "",
-        row.submitted ? "completed-row" : ""
-      ].join(" ");
-
-      let actionButton = `
-        <button class="btn-disabled" disabled>—</button>
-      `;
-
-      if (
-        isSuperuser() &&
-        row.escalation === "Escalated" &&
-        !row.submitted
-      ) {
-        actionButton = `
-          <button
-            class="btn-assign"
-            onclick="openAssignmentManager(${row.id})"
-          >
-            Assign
-          </button>
-        `;
-      }
-
-      return `
-        <tr class="${rowClass}">
-          <td>${row.plant}</td>
-          <td>${row.machine}</td>
-          <td>${row.bottle}</td>
-          <td>${row.customer}</td>
-          <td>${row.lot}</td>
-          <td>${row.startDate}</td>
-          <td>${row.endDate}</td>
-          <td>${row.orderQuantity.toLocaleString()}</td>
-          <td>${row.quantityProduced.toLocaleString()}</td>
-
-          <td>
-            <span class="status ${statusClass(row.status)}">
-              ${row.status}
-            </span>
-          </td>
-
-          <td>${row.primaryQC}</td>
-          <td>${row.backupQC}</td>
-          <td>${row.deadline}</td>
-          <td>${row.reminder}</td>
-
-          <td>
-            <span class="status ${
-              row.escalation === "Escalated"
-                ? "status-escalated"
-                : row.escalation === "Assigned by Superuser"
-                  ? "status-assigned"
-                  : "status-pending"
-            }">
-              ${row.escalation}
-            </span>
-          </td>
-
-          <td class="urgency">
-            ${urgencyIcon(row.urgency)}
-          </td>
-
-          <td>
-            <input
-              class="submit-checkbox"
-              type="checkbox"
-              ${row.submitted ? "checked" : ""}
-              onchange="toggleSubmitted(${row.id}, this.checked)"
-            >
-          </td>
-
-          <td>
-            ${actionButton}
-          </td>
-        </tr>
-      `;
-    }).join("");
-
-    updateKPIs(rows);
-    updateDashboardHeading();
-  }
-
-  function updateKPIs(rows) {
-    const pending = rows.filter(function(row) {
-      return row.status === "Pending";
-    }).length;
-
-    const escalated = rows.filter(function(row) {
-      return row.status === "Escalated";
-    }).length;
-
-    const completed = rows.filter(function(row) {
-      return row.status === "Complete";
-    }).length;
-
-    const dueToday = rows.filter(function(row) {
-      return (
-        row.deadline === "12/9/2025" &&
-        !row.submitted
-      );
-    }).length;
-
-    const rate = rows.length
-      ? Math.round((completed / rows.length) * 100)
-      : 0;
-
-    document.getElementById("visibleCount").textContent = rows.length;
-    document.getElementById("pendingCount").textContent = pending;
-    document.getElementById("escalatedCount").textContent = escalated;
-    document.getElementById("completedCount").textContent = completed;
-    document.getElementById("dueTodayCount").textContent = dueToday;
-    document.getElementById("completionRate").textContent = rate + "%";
-  }
-
-  function updateDashboardHeading() {
-    const title = document.getElementById("dashboardTitle");
-    const subtitle = document.getElementById("dashboardSubtitle");
-
-    if (isSuperuser()) {
-      title.textContent =
-        roleFilter.value === "Josh"
-          ? "Josh / Superuser Dashboard"
-          : "Superuser Dashboard";
-
-      subtitle.textContent =
-        "Showing all COA tasks, escalations and reassignment controls.";
-    } else {
-      title.textContent =
-        roleFilter.value + " — Assigned COA Dashboard";
-
-      subtitle.textContent =
-        "Showing COAs where this user is the Primary or Backup QC.";
-    }
-  }
-
-  window.toggleSubmitted = function(id, checked) {
-    const row = dashboardData.find(function(item) {
-      return item.id === id;
-    });
-
-    if (!row) return;
-
-    row.submitted = checked;
-
-    if (checked) {
-      row.status = "Complete";
-      row.escalation = "Not Escalated";
-      row.urgency = "green";
-      row.reminder = "COA submitted";
-    } else {
-      row.status = "Pending";
-      row.reminder = "Task reopened";
-    }
-
-    saveData();
-    renderDashboard();
-
-    showToast(
-      checked
-        ? "COA marked as submitted."
-        : "COA task reopened."
-    );
-  };
-
-  window.openAssignmentManager = function(id) {
-    if (!isSuperuser()) {
-      showToast("Only a Superuser can reassign an escalated COA.");
-      return;
-    }
-
-    const row = dashboardData.find(function(item) {
-      return item.id === id;
-    });
-
-    if (!row || row.escalation !== "Escalated") return;
-
-    activeAssignmentId = id;
-
-    document.getElementById("assignmentPlant").textContent =
-      row.plant;
-
-    document.getElementById("assignmentMachine").textContent =
-      row.machine;
-
-    document.getElementById("assignmentBottle").textContent =
-      row.bottle;
-
-    document.getElementById("assignmentLot").textContent =
-      row.lot;
-
-    document.getElementById("assignmentCurrentOwner").textContent =
-      row.primaryQC;
-
-    document.getElementById("assignmentEscalation").textContent =
-      row.escalation;
-
-    document.getElementById("assignTo").value =
-      row.primaryQC;
-
-    const firstBackup = row.backupQC.split(",")[0].trim();
-
-    const backupOptions =
-      Array.from(document.getElementById("assignBackup").options);
-
-    if (
-      backupOptions.some(function(option) {
-        return option.value === firstBackup;
-      })
-    ) {
-      document.getElementById("assignBackup").value =
-        firstBackup;
-    }
-
-    document.getElementById("assignmentComments").value = "";
-
-    renderAssignmentHistory(row);
-
-    document.getElementById("assignmentModal").style.display =
-      "flex";
-  };
-
-  function renderAssignmentHistory(row) {
-    const historyContainer =
-      document.getElementById("assignmentHistory");
-
-    const history = row.assignmentHistory || [];
-
-    if (!history.length) {
-      historyContainer.innerHTML = `
-        <div class="history-item">
-          No previous reassignment history.
+      <div class="kpi">
+        <div class="kpi-label">
+          Visible COAs
         </div>
-      `;
 
-      return;
-    }
+        <div
+          class="kpi-value"
+          id="visibleCount"
+        >
+          0
+        </div>
+      </div>
 
-    historyContainer.innerHTML = [...history]
-      .reverse()
-      .map(function(item) {
-        return `
-          <div class="history-item">
-            <strong>${item.from}</strong>
-            →
-            <strong>${item.to}</strong>
-            <br>
+      <div class="kpi warning">
+        <div class="kpi-label">
+          Pending
+        </div>
 
-            ${item.date} by ${item.assignedBy}
+        <div
+          class="kpi-value"
+          id="pendingCount"
+        >
+          0
+        </div>
+      </div>
 
-            ${
-              item.comments
-                ? `<br>Comments: ${item.comments}`
-                : ""
-            }
-          </div>
-        `;
-      })
-      .join("");
-  }
+      <div class="kpi danger">
+        <div class="kpi-label">
+          Escalated
+        </div>
 
-  document
-    .getElementById("saveAssignmentButton")
-    .addEventListener("click", function() {
-      const row = dashboardData.find(function(item) {
-        return item.id === activeAssignmentId;
-      });
+        <div
+          class="kpi-value"
+          id="escalatedCount"
+        >
+          0
+        </div>
+      </div>
 
-      if (!row) return;
+      <div class="kpi success">
+        <div class="kpi-label">
+          Completed
+        </div>
 
-      const newOwner =
-        document.getElementById("assignTo").value;
+        <div
+          class="kpi-value"
+          id="completedCount"
+        >
+          0
+        </div>
+      </div>
 
-      const newBackup =
-        document.getElementById("assignBackup").value;
+      <div class="kpi purple">
+        <div class="kpi-label">
+          Backup Activated
+        </div>
 
-      const comments =
-        document
-          .getElementById("assignmentComments")
-          .value
-          .trim();
+        <div
+          class="kpi-value"
+          id="backupActivatedCount"
+        >
+          0
+        </div>
+      </div>
 
-      const originalOwner = row.primaryQC;
+      <div class="kpi">
+        <div class="kpi-label">
+          Completion Rate
+        </div>
 
-      if (newOwner === originalOwner) {
-        showToast("Please select a different Primary QC user.");
-        return;
-      }
+        <div
+          class="kpi-value"
+          id="completionRate"
+        >
+          0%
+        </div>
+      </div>
 
-      row.assignmentHistory =
-        row.assignmentHistory || [];
+    </section>
 
-      row.assignmentHistory.push({
-        from: originalOwner,
-        to: newOwner,
-        assignedBy: "Josh / Superuser",
-        date: new Date().toLocaleString(),
-        comments: comments
-      });
+    <section class="workflow">
 
-      row.primaryQC = newOwner;
-      row.backupQC = newBackup;
-      row.status = "Pending";
-      row.escalation = "Assigned by Superuser";
-      row.urgency = "yellow";
-      row.reminder = "Reassignment alert sent";
+      <div class="workflow-step">
+        <div class="step-number">1</div>
 
-      const notifyNew =
-        document.getElementById("notifyNewOwner").checked;
+        <b>SAP / Production Log</b>
 
-      const notifyOriginal =
-        document.getElementById("notifyOriginalOwner").checked;
+        <span>
+          Production data is automatically added after
+          the manufacturing lot is completed.
+        </span>
+      </div>
 
-      saveData();
+      <div class="workflow-step">
+        <div class="step-number">2</div>
 
-      document.getElementById("assignmentModal").style.display =
-        "none";
+        <b>Primary QC Visibility</b>
 
-      activeAssignmentId = null;
+        <span>
+          The Primary QC sees the COA task immediately
+          on the Primary visibility date.
+        </span>
+      </div>
 
-      renderDashboard();
+      <div class="workflow-step">
+        <div class="step-number">3</div>
 
-      let message =
-        "COA reassigned from " +
-        originalOwner +
-        " to " +
-        newOwner +
-        ".";
+        <b>Backup Activation</b>
 
-      if (notifyNew || notifyOriginal) {
-        message += " Notification simulated.";
-      }
+        <span>
+          The Backup QC sees the task on the Backup
+          visibility date only if the COA is incomplete.
+        </span>
+      </div>
 
-      showToast(message);
-    });
+      <div class="workflow-step">
+        <div class="step-number">4</div>
 
-  document
-    .getElementById("cancelAssignmentButton")
-    .addEventListener("click", function() {
-      document.getElementById("assignmentModal").style.display =
-        "none";
+        <b>Reminder and Escalation</b>
 
-      activeAssignmentId = null;
-    });
+        <span>
+          Incomplete tasks generate reminders and can
+          be escalated to the Superuser.
+        </span>
+      </div>
 
-  document
-    .getElementById("manualRequestButton")
-    .addEventListener("click", function() {
-      document.getElementById("manualRequestModal").style.display =
-        "flex";
-    });
+      <div class="workflow-step">
+        <div class="step-number">5</div>
 
-  document
-    .getElementById("cancelManualButton")
-    .addEventListener("click", function() {
-      document.getElementById("manualRequestModal").style.display =
-        "none";
-    });
+        <b>COA Submitted</b>
 
-  document
-    .getElementById("submitManualButton")
-    .addEventListener("click", function() {
-      const quantity =
-        Number(document.getElementById("manualQuantity").value) || 0;
+        <span>
+          After submission, the COA is removed from the
+          active Primary and Backup QC queues.
+        </span>
+      </div>
 
-      const newRequest = {
-        id: Date.now(),
-        plant: document.getElementById("manualPlant").value,
-        machine:
-          document.getElementById("manualMachine").value.trim() ||
-          "M",
-        bottle:
-          document.getElementById("manualBottle").value.trim() ||
-          "Manual COA Request",
-        customer:
-          document.getElementById("manualCustomer").value.trim() ||
-          "Customer",
-        lot:
-          document.getElementById("manualLot").value.trim() ||
-          "MAN-" + Date.now().toString().slice(-5),
-        startDate: "12/9/2025",
-        endDate: "12/9/2025",
-        orderQuantity: quantity,
-        quantityProduced: quantity,
+    </section>
+
+    <section class="panel">
+
+      <div class="panel-header">
+
+        <div>
+          <h2 id="dashboardTitle">
+            Superuser Dashboard
+          </h2>
+
+          <p id="dashboardSubtitle">
+            Showing all COA tasks across all plants.
+          </p>
+        </div>
+
+        <div class="legend">
+          <span>
+            <i class="legend-dot green-dot"></i>
+            On track
+          </span>
+
+          <span>
+            <i class="legend-dot yellow-dot"></i>
+            Due soon
+          </span>
+
+          <span>
+            <i class="legend-dot red-dot"></i>
+            Escalated
+          </span>
+
+          <span>
+            <i class="legend-dot purple-dot"></i>
+            Backup activated
+          </span>
+        </div>
+
+      </div>
+
+      <div class="table-wrapper">
+
+        <table>
+
+          <thead>
+            <tr>
+              <th>Plant</th>
+              <th>Machine #</th>
+              <th>Bottle Description</th>
+              <th>Customer</th>
+              <th>Lot #</th>
+              <th>Start Date</th>
+              <th>End Date</th>
+              <th>Order Qty</th>
+              <th>Qty Produced</th>
+              <th>COA Status</th>
+              <th>Primary QC</th>
+              <th>Backup QC</th>
+              <th>Primary Visible</th>
+              <th>Backup Visible</th>
+              <th>COA Deadline</th>
+              <th>Reminder Sent</th>
+              <th>Escalation Status</th>
+              <th>Viewing As</th>
+              <th>Urgency</th>
+              <th>COA Submitted</th>
+              <th>Superuser Action</th>
+            </tr>
+          </thead>
+
+          <tbody id="dashboardBody"></tbody>
+
+        </table>
+
+      </div>
+
+    </section>
+
+    <div style="margin-top: 15px; text-align: right;">
+      <button
+        class="btn-reset-data"
+        id="resetDataButton"
+      >
+        Reset Demo Data
+      </button>
+    </div>
+
+  </main>
+
+  <!-- Manual COA Request Modal -->
+
+  <div
+    class="modal"
+    id="manualRequestModal"
+  >
+
+    <div class="modal-card">
+
+      <h3>
+        Manual COA Request
+      </h3>
+
+      <div class="form-grid">
+
+        <div class="field">
+          <label>Plant</label>
+
+          <select id="manualPlant">
+            <option value="1002">1002</option>
+            <option value="1006">1006</option>
+            <option value="1011">1011</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label>Machine</label>
+
+          <input
+            id="manualMachine"
+            placeholder="Example: A"
+          >
+        </div>
+
+        <div class="field">
+          <label>Bottle Description</label>
+
+          <input
+            id="manualBottle"
+            placeholder="Example: 35oz Red Brick"
+          >
+        </div>
+
+        <div class="field">
+          <label>Customer</label>
+
+          <input
+            id="manualCustomer"
+            placeholder="Example: P&G"
+          >
+        </div>
+
+        <div class="field">
+          <label>Lot Number</label>
+
+          <input
+            id="manualLot"
+            placeholder="Example: AXSM-1025"
+          >
+        </div>
+
+        <div class="field">
+          <label>Quantity</label>
+
+          <input
+            id="manualQuantity"
+            type="number"
+            value="75000"
+          >
+        </div>
+
+        <div class="field">
+          <label>Primary QC</label>
+
+          <select id="manualPrimary">
+            <option value="Raj">Raj</option>
+            <option value="Ram">Ram</option>
+            <option value="Jasdip">Jasdip</option>
+            <option value="Pritesh">Pritesh</option>
+            <option value="Kiran">Kiran</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label>Backup QC</label>
+
+          <select id="manualBackup">
+            <option value="Jasdip">Jasdip</option>
+            <option value="Raj">Raj</option>
+            <option value="Ram">Ram</option>
+            <option value="Pritesh">Pritesh</option>
+            <option value="Kiran">Kiran</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label>Primary Visibility Date</label>
+
+          <input
+            id="manualPrimaryDate"
+            type="date"
+            value="2025-12-08"
+          >
+        </div>
+
+        <div class="field">
+          <label>Backup Visibility Date</label>
+
+          <input
+            id="manualBackupDate"
+            type="date"
+            value="2025-12-09"
+          >
+        </div>
+
+        <div class="field">
+          <label>COA Deadline</label>
+
+          <input
+            id="manualDeadline"
+            type="date"
+            value="2025-12-09"
+          >
+        </div>
+
+      </div>
+
+      <div class="modal-actions">
+
+        <button
+          class="btn-secondary"
+          id="cancelManualButton"
+        >
+          Cancel
+        </button>
+
+        <button
+          class="btn-primary"
+          id="submitManualButton"
+        >
+          Submit COA Request
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- Superuser Assignment Modal -->
+
+  <div
+    class="modal"
+    id="assignmentModal"
+  >
+
+    <div class="modal-card">
+
+      <h3>
+        COA Assignment Manager
+      </h3>
+
+      <div class="assignment-summary">
+
+        <div>
+          <b>Plant</b>
+          <span id="assignmentPlant"></span>
+        </div>
+
+        <div>
+          <b>Machine</b>
+          <span id="assignmentMachine"></span>
+        </div>
+
+        <div>
+          <b>Bottle Description</b>
+          <span id="assignmentBottle"></span>
+        </div>
+
+        <div>
+          <b>Lot Number</b>
+          <span id="assignmentLot"></span>
+        </div>
+
+        <div>
+          <b>Current Primary QC</b>
+          <span id="assignmentCurrentOwner"></span>
+        </div>
+
+        <div>
+          <b>Escalation Status</b>
+          <span id="assignmentEscalation"></span>
+        </div>
+
+      </div>
+
+      <div class="form-grid">
+
+        <div class="field">
+          <label for="assignTo">
+            Assign COA To
+          </label>
+
+          <select id="assignTo">
+            <option value="Raj">Raj</option>
+            <option value="Ram">Ram</option>
+            <option value="Jasdip">Jasdip</option>
+            <option value="Pritesh">Pritesh</option>
+            <option value="Kiran">Kiran</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="assignBackup">
+            Backup QC
+          </label>
+
+          <select id="assignBackup">
+            <option value="Jasdip">Jasdip</option>
+            <option value="Raj">Raj</option>
+            <option value="Ram">Ram</option>
+            <option value="Pritesh">Pritesh</option>
+            <option value="Kiran">Kiran</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="newPrimaryVisibleDate">
+            New Primary Visibility Date
+          </label>
+
+          <input
+            id="newPrimaryVisibleDate"
+            type="date"
+          >
+        </div>
+
+        <div class="field">
+          <label for="newBackupVisibleDate">
+            New Backup Visibility Date
+          </label>
+
+          <input
+            id="newBackupVisibleDate"
+            type="date"
+          >
+        </div>
+
+        <div class="field full-width">
+          <label for="assignmentComments">
+            Assignment Comments
+          </label>
+
+          <textarea
+            id="assignmentComments"
+            placeholder="Example: Reassigned due to workload, absence or vacation."
+          ></textarea>
+        </div>
+
+      </div>
+
+      <div class="check-option">
+        <label>
+          <input
+            type="checkbox"
+            id="notifyNewOwner"
+            checked
+          >
+
+          Notify new assignee
+        </label>
+      </div>
+
+      <div class="check-option">
+        <label>
+          <input
+            type="checkbox"
+            id="notifyOriginalOwner"
+            checked
+          >
+
+          Notify original owner
+        </label>
+      </div>
+
+      <h4>
+        Assignment History
+      </h4>
+
+      <div
+        class="history-list"
+        id="assignmentHistory"
+      >
+        <div class="history-item">
+          No previous assignment history.
+        </div>
+      </div>
+
+      <div class="modal-actions">
+
+        <button
+          class="btn-secondary"
+          id="cancelAssignmentButton"
+        >
+          Cancel
+        </button>
+
+        <button
+          class="btn-primary"
+          id="saveAssignmentButton"
+        >
+          Assign COA
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <div
+    class="toast"
+    id="toast"
+  ></div>
+
+  <script>
+    const initialData = [
+      {
+        id: 1,
+        plant: "1002",
+        machine: "A",
+        bottle: "51.5oz Polaris",
+        customer: "P&G",
+        lot: "AXSM-1001",
+        startDate: "12/7/2025",
+        endDate: "12/8/2025",
+        orderQuantity: 80000,
+        quantityProduced: 80000,
         status: "Pending",
-        primaryQC:
-          document.getElementById("manualPrimary").value,
-        backupQC:
-          document.getElementById("manualBackup").value,
-        deadline: "12/10/2025",
-        reminder: "Notification sent",
+        primaryQC: "Raj",
+        backupQC: "Jasdip, Ram",
+        primaryVisibleDate: "12/8/2025",
+        backupVisibleDate: "12/9/2025",
+        deadline: "12/9/2025",
+        reminder: "Not Sent",
+        escalation: "Not Escalated",
+        urgency: "yellow",
+        submitted: false,
+        assignmentHistory: []
+      },
+
+      {
+        id: 2,
+        plant: "1002",
+        machine: "B",
+        bottle: "35oz Red Brick",
+        customer: "P&G",
+        lot: "AXSM-1002",
+        startDate: "12/7/2025",
+        endDate: "12/8/2025",
+        orderQuantity: 90000,
+        quantityProduced: 90000,
+        status: "Pending",
+        primaryQC: "Raj",
+        backupQC: "Jasdip, Ram",
+        primaryVisibleDate: "12/8/2025",
+        backupVisibleDate: "12/9/2025",
+        deadline: "12/9/2025",
+        reminder: "Not Sent",
         escalation: "Not Escalated",
         urgency: "green",
         submitted: false,
         assignmentHistory: []
+      },
+
+      {
+        id: 3,
+        plant: "1002",
+        machine: "C",
+        bottle: "10oz Tide Original",
+        customer: "P&G",
+        lot: "AXSM-1003",
+        startDate: "12/6/2025",
+        endDate: "12/8/2025",
+        orderQuantity: 80000,
+        quantityProduced: 80000,
+        status: "Complete",
+        primaryQC: "Raj",
+        backupQC: "Jasdip, Ram",
+        primaryVisibleDate: "12/8/2025",
+        backupVisibleDate: "12/9/2025",
+        deadline: "12/9/2025",
+        reminder: "COA submitted",
+        escalation: "Not Escalated",
+        urgency: "green",
+        submitted: true,
+        assignmentHistory: []
+      },
+
+      {
+        id: 4,
+        plant: "1002",
+        machine: "D",
+        bottle: "32oz White Oval",
+        customer: "P&G",
+        lot: "AXSM-1004",
+        startDate: "12/6/2025",
+        endDate: "12/8/2025",
+        orderQuantity: 70000,
+        quantityProduced: 70000,
+        status: "Escalated",
+        primaryQC: "Raj",
+        backupQC: "Jasdip, Ram",
+        primaryVisibleDate: "12/8/2025",
+        backupVisibleDate: "12/9/2025",
+        deadline: "12/9/2025",
+        reminder: "Reminder sent",
+        escalation: "Escalated",
+        urgency: "red",
+        submitted: false,
+        assignmentHistory: []
+      },
+
+      {
+        id: 5,
+        plant: "1002",
+        machine: "E",
+        bottle: "64oz HDPE Handleware",
+        customer: "P&G",
+        lot: "AXSM-1005",
+        startDate: "12/7/2025",
+        endDate: "12/8/2025",
+        orderQuantity: 75000,
+        quantityProduced: 75000,
+        status: "Pending",
+        primaryQC: "Raj",
+        backupQC: "Jasdip, Ram",
+        primaryVisibleDate: "12/8/2025",
+        backupVisibleDate: "12/9/2025",
+        deadline: "12/9/2025",
+        reminder: "Not Sent",
+        escalation: "Not Escalated",
+        urgency: "yellow",
+        submitted: false,
+        assignmentHistory: []
+      },
+
+      {
+        id: 6,
+        plant: "1011",
+        machine: "F",
+        bottle: "28oz Personal Care",
+        customer: "P&G",
+        lot: "AXSM-1006",
+        startDate: "12/7/2025",
+        endDate: "12/8/2025",
+        orderQuantity: 90000,
+        quantityProduced: 90000,
+        status: "Pending",
+        primaryQC: "Ram",
+        backupQC: "Jasdip, Raj",
+        primaryVisibleDate: "12/8/2025",
+        backupVisibleDate: "12/9/2025",
+        deadline: "12/9/2025",
+        reminder: "Not Sent",
+        escalation: "Not Escalated",
+        urgency: "green",
+        submitted: false,
+        assignmentHistory: []
+      },
+
+      {
+        id: 7,
+        plant: "1011",
+        machine: "G",
+        bottle: "16oz Household",
+        customer: "P&G",
+        lot: "AXSM-1007",
+        startDate: "12/5/2025",
+        endDate: "12/8/2025",
+        orderQuantity: 85000,
+        quantityProduced: 85000,
+        status: "Complete",
+        primaryQC: "Ram",
+        backupQC: "Jasdip, Raj",
+        primaryVisibleDate: "12/8/2025",
+        backupVisibleDate: "12/9/2025",
+        deadline: "12/9/2025",
+        reminder: "COA submitted",
+        escalation: "Not Escalated",
+        urgency: "green",
+        submitted: true,
+        assignmentHistory: []
+      },
+
+      {
+        id: 8,
+        plant: "1006",
+        machine: "H",
+        bottle: "32oz Detergent",
+        customer: "P&G",
+        lot: "AXSM-1008",
+        startDate: "12/7/2025",
+        endDate: "12/8/2025",
+        orderQuantity: 89000,
+        quantityProduced: 89000,
+        status: "Escalated",
+        primaryQC: "Ram",
+        backupQC: "Jasdip, Raj",
+        primaryVisibleDate: "12/8/2025",
+        backupVisibleDate: "12/9/2025",
+        deadline: "12/9/2025",
+        reminder: "Reminder sent",
+        escalation: "Escalated",
+        urgency: "red",
+        submitted: false,
+        assignmentHistory: []
+      },
+
+      {
+        id: 9,
+        plant: "1006",
+        machine: "I",
+        bottle: "40oz Industrial",
+        customer: "P&G",
+        lot: "AXSM-1009",
+        startDate: "12/7/2025",
+        endDate: "12/8/2025",
+        orderQuantity: 99000,
+        quantityProduced: 99000,
+        status: "Pending",
+        primaryQC: "Ram",
+        backupQC: "Jasdip, Raj",
+        primaryVisibleDate: "12/8/2025",
+        backupVisibleDate: "12/9/2025",
+        deadline: "12/9/2025",
+        reminder: "Not Sent",
+        escalation: "Not Escalated",
+        urgency: "yellow",
+        submitted: false,
+        assignmentHistory: []
+      }
+    ];
+
+    const roleFilter =
+      document.getElementById("roleFilter");
+
+    const dashboardDateInput =
+      document.getElementById("dashboardDate");
+
+    const plantFilter =
+      document.getElementById("plantFilter");
+
+    const statusFilter =
+      document.getElementById("statusFilter");
+
+    const searchInput =
+      document.getElementById("searchInput");
+
+    const dashboardBody =
+      document.getElementById("dashboardBody");
+
+    let activeAssignmentId = null;
+
+    let dashboardData = loadDashboardData();
+
+    function loadDashboardData() {
+      const storedData =
+        localStorage.getItem("coaDashboardDateDemo");
+
+      if (!storedData) {
+        return JSON.parse(
+          JSON.stringify(initialData)
+        );
+      }
+
+      try {
+        const parsedData =
+          JSON.parse(storedData);
+
+        return parsedData.map(function(row) {
+          return {
+            ...row,
+
+            primaryVisibleDate:
+              row.primaryVisibleDate ||
+              row.endDate ||
+              "12/8/2025",
+
+            backupVisibleDate:
+              row.backupVisibleDate ||
+              row.deadline ||
+              "12/9/2025",
+
+            assignmentHistory:
+              Array.isArray(row.assignmentHistory)
+                ? row.assignmentHistory
+                : []
+          };
+        });
+      } catch (error) {
+        return JSON.parse(
+          JSON.stringify(initialData)
+        );
+      }
+    }
+
+    function saveData() {
+      localStorage.setItem(
+        "coaDashboardDateDemo",
+        JSON.stringify(dashboardData)
+      );
+    }
+
+    function parseDisplayDate(dateText) {
+      if (!dateText) {
+        return new Date(1900, 0, 1);
+      }
+
+      const parts = dateText.split("/");
+
+      return new Date(
+        Number(parts[2]),
+        Number(parts[0]) - 1,
+        Number(parts[1])
+      );
+    }
+
+    function parseInputDate(inputDate) {
+      if (!inputDate) {
+        return new Date(1900, 0, 1);
+      }
+
+      const parts = inputDate.split("-");
+
+      return new Date(
+        Number(parts[0]),
+        Number(parts[1]) - 1,
+        Number(parts[2])
+      );
+    }
+
+    function formatInputDateAsDisplay(inputDate) {
+      if (!inputDate) {
+        return "";
+      }
+
+      const parts = inputDate.split("-");
+
+      return (
+        Number(parts[1]) +
+        "/" +
+        Number(parts[2]) +
+        "/" +
+        parts[0]
+      );
+    }
+
+    function formatDateForInput(displayDate) {
+      if (!displayDate) {
+        return "";
+      }
+
+      const parts = displayDate.split("/");
+
+      return (
+        parts[2] +
+        "-" +
+        String(parts[0]).padStart(2, "0") +
+        "-" +
+        String(parts[1]).padStart(2, "0")
+      );
+    }
+
+    function addDaysToInputDate(inputDate, days) {
+      const date = parseInputDate(inputDate);
+
+      date.setDate(
+        date.getDate() + days
+      );
+
+      return [
+        date.getFullYear(),
+        String(date.getMonth() + 1).padStart(2, "0"),
+        String(date.getDate()).padStart(2, "0")
+      ].join("-");
+    }
+
+    function getDashboardDate() {
+      return parseInputDate(
+        dashboardDateInput.value
+      );
+    }
+
+    function isSuperuser() {
+      return (
+        roleFilter.value === "Superuser" ||
+        roleFilter.value === "Josh"
+      );
+    }
+
+    function getBackupNames(row) {
+      return String(row.backupQC || "")
+        .split(",")
+        .map(function(name) {
+          return name.trim();
+        })
+        .filter(Boolean);
+    }
+
+    function isPrimaryForRow(row, userName) {
+      return row.primaryQC === userName;
+    }
+
+    function isBackupForRow(row, userName) {
+      return getBackupNames(row)
+        .includes(userName);
+    }
+
+    function isIncomplete(row) {
+      return (
+        !row.submitted &&
+        row.status !== "Complete"
+      );
+    }
+
+    function isBackupActivated(row) {
+      return (
+        isIncomplete(row) &&
+        getDashboardDate() >=
+          parseDisplayDate(row.backupVisibleDate)
+      );
+    }
+
+    function isTaskVisibleToSelectedUser(row) {
+      const selectedUser =
+        roleFilter.value;
+
+      const dashboardDate =
+        getDashboardDate();
+
+      if (isSuperuser()) {
+        return true;
+      }
+
+      /*
+        Completed COAs disappear from regular
+        Primary and Backup user queues.
+      */
+
+      if (!isIncomplete(row)) {
+        return false;
+      }
+
+      if (
+        isPrimaryForRow(row, selectedUser)
+      ) {
+        return (
+          dashboardDate >=
+          parseDisplayDate(
+            row.primaryVisibleDate
+          )
+        );
+      }
+
+      if (
+        isBackupForRow(row, selectedUser)
+      ) {
+        return (
+          dashboardDate >=
+          parseDisplayDate(
+            row.backupVisibleDate
+          )
+        );
+      }
+
+      return false;
+    }
+
+    function getViewingRole(row) {
+      if (isSuperuser()) {
+        return `
+          <span class="visibility-label superuser-label">
+            Superuser
+          </span>
+        `;
+      }
+
+      if (
+        row.primaryQC === roleFilter.value
+      ) {
+        return `
+          <span class="visibility-label primary-label">
+            Primary QC
+          </span>
+        `;
+      }
+
+      if (
+        isBackupForRow(
+          row,
+          roleFilter.value
+        )
+      ) {
+        return `
+          <span class="visibility-label backup-label">
+            Backup Activated
+          </span>
+        `;
+      }
+
+      return "";
+    }
+
+    function getFilteredData() {
+      const selectedPlant =
+        plantFilter.value;
+
+      const selectedStatus =
+        statusFilter.value;
+
+      const searchText =
+        searchInput.value
+          .toLowerCase()
+          .trim();
+
+      return dashboardData.filter(
+        function(row) {
+          const userVisibilityMatches =
+            isTaskVisibleToSelectedUser(row);
+
+          const plantMatches =
+            selectedPlant === "All" ||
+            row.plant === selectedPlant;
+
+          const statusMatches =
+            selectedStatus === "All" ||
+            row.status === selectedStatus;
+
+          const searchableText = [
+            row.plant,
+            row.machine,
+            row.bottle,
+            row.customer,
+            row.lot,
+            row.primaryQC,
+            row.backupQC
+          ]
+            .join(" ")
+            .toLowerCase();
+
+          const searchMatches =
+            !searchText ||
+            searchableText.includes(
+              searchText
+            );
+
+          return (
+            userVisibilityMatches &&
+            plantMatches &&
+            statusMatches &&
+            searchMatches
+          );
+        }
+      );
+    }
+
+    function urgencyIcon(urgency) {
+      if (urgency === "red") {
+        return "🔴";
+      }
+
+      if (urgency === "yellow") {
+        return "🟡";
+      }
+
+      return "🟢";
+    }
+
+    function statusClass(status) {
+      if (status === "Complete") {
+        return "status-complete";
+      }
+
+      if (status === "Escalated") {
+        return "status-escalated";
+      }
+
+      if (
+        status ===
+        "Assigned by Superuser"
+      ) {
+        return "status-assigned";
+      }
+
+      return "status-pending";
+    }
+
+    function escalationClass(
+      escalation
+    ) {
+      if (escalation === "Escalated") {
+        return "status-escalated";
+      }
+
+      if (
+        escalation ===
+        "Assigned by Superuser"
+      ) {
+        return "status-assigned";
+      }
+
+      return "status-pending";
+    }
+
+    function renderDashboard() {
+      const rows = getFilteredData();
+
+      if (!rows.length) {
+        dashboardBody.innerHTML = `
+          <tr>
+            <td colspan="21">
+              <div class="empty-message">
+                No COA tasks are visible for this user,
+                date and filter selection.
+              </div>
+            </td>
+          </tr>
+        `;
+      } else {
+        dashboardBody.innerHTML =
+          rows.map(function(row) {
+            const rowClass = [
+              row.escalation ===
+              "Escalated"
+                ? "escalated-row"
+                : "",
+
+              row.submitted
+                ? "completed-row"
+                : ""
+            ].join(" ");
+
+            let actionButton = `
+              <button
+                class="btn-disabled"
+                disabled
+              >
+                —
+              </button>
+            `;
+
+            if (
+              isSuperuser() &&
+              row.escalation ===
+                "Escalated" &&
+              !row.submitted
+            ) {
+              actionButton = `
+                <button
+                  class="btn-assign"
+                  onclick="openAssignmentManager(${row.id})"
+                >
+                  Assign
+                </button>
+              `;
+            }
+
+            return `
+              <tr class="${rowClass}">
+                <td>${row.plant}</td>
+                <td>${row.machine}</td>
+                <td>${row.bottle}</td>
+                <td>${row.customer}</td>
+                <td>${row.lot}</td>
+                <td>${row.startDate}</td>
+                <td>${row.endDate}</td>
+
+                <td>
+                  ${Number(
+                    row.orderQuantity
+                  ).toLocaleString()}
+                </td>
+
+                <td>
+                  ${Number(
+                    row.quantityProduced
+                  ).toLocaleString()}
+                </td>
+
+                <td>
+                  <span
+                    class="status ${statusClass(
+                      row.status
+                    )}"
+                  >
+                    ${row.status}
+                  </span>
+                </td>
+
+                <td>${row.primaryQC}</td>
+                <td>${row.backupQC}</td>
+                <td>${row.primaryVisibleDate}</td>
+                <td>${row.backupVisibleDate}</td>
+                <td>${row.deadline}</td>
+                <td>${row.reminder}</td>
+
+                <td>
+                  <span
+                    class="status ${escalationClass(
+                      row.escalation
+                    )}"
+                  >
+                    ${row.escalation}
+                  </span>
+                </td>
+
+                <td>
+                  ${getViewingRole(row)}
+                </td>
+
+                <td class="urgency">
+                  ${urgencyIcon(
+                    row.urgency
+                  )}
+                </td>
+
+                <td>
+                  <input
+                    class="submit-checkbox"
+                    type="checkbox"
+                    ${row.submitted
+                      ? "checked"
+                      : ""}
+                    onchange="toggleSubmitted(
+                      ${row.id},
+                      this.checked
+                    )"
+                  >
+                </td>
+
+                <td>
+                  ${actionButton}
+                </td>
+              </tr>
+            `;
+          }).join("");
+      }
+
+      updateKPIs(rows);
+      updateDashboardHeading();
+      updateDateMessage();
+    }
+
+    function updateKPIs(rows) {
+      const pending =
+        rows.filter(function(row) {
+          return row.status === "Pending";
+        }).length;
+
+      const escalated =
+        rows.filter(function(row) {
+          return (
+            row.status === "Escalated" ||
+            row.escalation === "Escalated"
+          );
+        }).length;
+
+      const completed =
+        rows.filter(function(row) {
+          return row.status === "Complete";
+        }).length;
+
+      const backupActivated =
+        rows.filter(function(row) {
+          return isBackupActivated(row);
+        }).length;
+
+      const completionRate =
+        rows.length
+          ? Math.round(
+              completed /
+              rows.length *
+              100
+            )
+          : 0;
+
+      document.getElementById(
+        "visibleCount"
+      ).textContent = rows.length;
+
+      document.getElementById(
+        "pendingCount"
+      ).textContent = pending;
+
+      document.getElementById(
+        "escalatedCount"
+      ).textContent = escalated;
+
+      document.getElementById(
+        "completedCount"
+      ).textContent = completed;
+
+      document.getElementById(
+        "backupActivatedCount"
+      ).textContent = backupActivated;
+
+      document.getElementById(
+        "completionRate"
+      ).textContent =
+        completionRate + "%";
+    }
+
+    function updateDashboardHeading() {
+      const title =
+        document.getElementById(
+          "dashboardTitle"
+        );
+
+      const subtitle =
+        document.getElementById(
+          "dashboardSubtitle"
+        );
+
+      if (isSuperuser()) {
+        title.textContent =
+          roleFilter.value === "Josh"
+            ? "Josh / Superuser Dashboard"
+            : "Superuser Dashboard";
+
+        subtitle.textContent =
+          "Showing all COA tasks, dates, escalations and reassignment controls.";
+      } else {
+        title.textContent =
+          roleFilter.value +
+          " — COA Dashboard";
+
+        subtitle.textContent =
+          "Primary tasks appear from the Primary visibility date. Backup tasks appear only after Backup activation and only while incomplete.";
+      }
+    }
+
+    function updateDateMessage() {
+      const displayDate =
+        formatInputDateAsDisplay(
+          dashboardDateInput.value
+        );
+
+      const selectedUser =
+        roleFilter.value;
+
+      const message =
+        document.getElementById(
+          "dateMessage"
+        );
+
+      if (isSuperuser()) {
+        message.innerHTML =
+          "<strong>Dashboard date: " +
+          displayDate +
+          ".</strong> The Superuser can see all COAs regardless of Primary or Backup activation dates.";
+      } else if (
+        selectedUser === "Jasdip"
+      ) {
+        message.innerHTML =
+          "<strong>Dashboard date: " +
+          displayDate +
+          ".</strong> Jasdip sees only incomplete COAs where the Backup visibility date has been reached.";
+      } else {
+        message.innerHTML =
+          "<strong>Dashboard date: " +
+          displayDate +
+          ".</strong> " +
+          selectedUser +
+          " sees Primary assignments from the Primary visibility date and Backup assignments only after Backup activation.";
+      }
+    }
+
+    window.toggleSubmitted =
+      function(id, checked) {
+        const row =
+          dashboardData.find(
+            function(item) {
+              return item.id === id;
+            }
+          );
+
+        if (!row) {
+          return;
+        }
+
+        row.submitted = checked;
+
+        if (checked) {
+          row.status = "Complete";
+          row.escalation =
+            "Not Escalated";
+          row.urgency = "green";
+          row.reminder =
+            "COA submitted";
+        } else {
+          row.status = "Pending";
+          row.reminder =
+            "Task reopened";
+        }
+
+        saveData();
+        renderDashboard();
+
+        showToast(
+          checked
+            ? "COA marked as submitted. It is removed from regular QC queues."
+            : "COA task reopened."
+        );
       };
 
-      dashboardData.unshift(newRequest);
+    window.openAssignmentManager =
+      function(id) {
+        if (!isSuperuser()) {
+          showToast(
+            "Only a Superuser can reassign an escalated COA."
+          );
 
-      saveData();
+          return;
+        }
 
-      document.getElementById("manualRequestModal").style.display =
-        "none";
+        const row =
+          dashboardData.find(
+            function(item) {
+              return item.id === id;
+            }
+          );
+
+        if (
+          !row ||
+          row.escalation !== "Escalated"
+        ) {
+          return;
+        }
+
+        activeAssignmentId = id;
+
+        document.getElementById(
+          "assignmentPlant"
+        ).textContent = row.plant;
+
+        document.getElementById(
+          "assignmentMachine"
+        ).textContent = row.machine;
+
+        document.getElementById(
+          "assignmentBottle"
+        ).textContent = row.bottle;
+
+        document.getElementById(
+          "assignmentLot"
+        ).textContent = row.lot;
+
+        document.getElementById(
+          "assignmentCurrentOwner"
+        ).textContent = row.primaryQC;
+
+        document.getElementById(
+          "assignmentEscalation"
+        ).textContent =
+          row.escalation;
+
+        document.getElementById(
+          "assignTo"
+        ).value = row.primaryQC;
+
+        const firstBackup =
+          getBackupNames(row)[0];
+
+        const backupOptions =
+          Array.from(
+            document.getElementById(
+              "assignBackup"
+            ).options
+          );
+
+        if (
+          backupOptions.some(
+            function(option) {
+              return (
+                option.value ===
+                firstBackup
+              );
+            }
+          )
+        ) {
+          document.getElementById(
+            "assignBackup"
+          ).value = firstBackup;
+        }
+
+        document.getElementById(
+          "newPrimaryVisibleDate"
+        ).value =
+          dashboardDateInput.value;
+
+        document.getElementById(
+          "newBackupVisibleDate"
+        ).value =
+          addDaysToInputDate(
+            dashboardDateInput.value,
+            1
+          );
+
+        document.getElementById(
+          "assignmentComments"
+        ).value = "";
+
+        renderAssignmentHistory(row);
+
+        document.getElementById(
+          "assignmentModal"
+        ).style.display = "flex";
+      };
+
+    function renderAssignmentHistory(
+      row
+    ) {
+      const historyContainer =
+        document.getElementById(
+          "assignmentHistory"
+        );
+
+      const history =
+        row.assignmentHistory || [];
+
+      if (!history.length) {
+        historyContainer.innerHTML = `
+          <div class="history-item">
+            No previous reassignment history.
+          </div>
+        `;
+
+        return;
+      }
+
+      historyContainer.innerHTML =
+        [...history]
+          .reverse()
+          .map(function(item) {
+            return `
+              <div class="history-item">
+                <strong>${item.from}</strong>
+                →
+                <strong>${item.to}</strong>
+                <br>
+
+                ${item.date}
+                by
+                ${item.assignedBy}
+
+                ${
+                  item.comments
+                    ? "<br>Comments: " +
+                      item.comments
+                    : ""
+                }
+              </div>
+            `;
+          })
+          .join("");
+    }
+
+    document
+      .getElementById(
+        "saveAssignmentButton"
+      )
+      .addEventListener(
+        "click",
+        function() {
+          const row =
+            dashboardData.find(
+              function(item) {
+                return (
+                  item.id ===
+                  activeAssignmentId
+                );
+              }
+            );
+
+          if (!row) {
+            return;
+          }
+
+          const newOwner =
+            document.getElementById(
+              "assignTo"
+            ).value;
+
+          const newBackup =
+            document.getElementById(
+              "assignBackup"
+            ).value;
+
+          const newPrimaryDate =
+            document.getElementById(
+              "newPrimaryVisibleDate"
+            ).value;
+
+          const newBackupDate =
+            document.getElementById(
+              "newBackupVisibleDate"
+            ).value;
+
+          const comments =
+            document
+              .getElementById(
+                "assignmentComments"
+              )
+              .value
+              .trim();
+
+          const originalOwner =
+            row.primaryQC;
+
+          if (
+            newOwner === originalOwner
+          ) {
+            showToast(
+              "Please select a different Primary QC user."
+            );
+
+            return;
+          }
+
+          if (
+            !newPrimaryDate ||
+            !newBackupDate
+          ) {
+            showToast(
+              "Select both Primary and Backup visibility dates."
+            );
+
+            return;
+          }
+
+          row.assignmentHistory =
+            row.assignmentHistory || [];
+
+          row.assignmentHistory.push({
+            from: originalOwner,
+            to: newOwner,
+            assignedBy:
+              "Josh / Superuser",
+            date:
+              new Date()
+                .toLocaleString(),
+            comments: comments
+          });
+
+          row.primaryQC = newOwner;
+          row.backupQC = newBackup;
+
+          row.primaryVisibleDate =
+            formatInputDateAsDisplay(
+              newPrimaryDate
+            );
+
+          row.backupVisibleDate =
+            formatInputDateAsDisplay(
+              newBackupDate
+            );
+
+          row.status = "Pending";
+
+          row.escalation =
+            "Assigned by Superuser";
+
+          row.urgency = "yellow";
+
+          row.reminder =
+            "Reassignment alert sent";
+
+          const notifyNew =
+            document.getElementById(
+              "notifyNewOwner"
+            ).checked;
+
+          const notifyOriginal =
+            document.getElementById(
+              "notifyOriginalOwner"
+            ).checked;
+
+          saveData();
+
+          document.getElementById(
+            "assignmentModal"
+          ).style.display = "none";
+
+          activeAssignmentId = null;
+
+          renderDashboard();
+
+          let message =
+            "COA reassigned from " +
+            originalOwner +
+            " to " +
+            newOwner +
+            ".";
+
+          if (
+            notifyNew ||
+            notifyOriginal
+          ) {
+            message +=
+              " Notification simulated.";
+          }
+
+          showToast(message);
+        }
+      );
+
+    document
+      .getElementById(
+        "cancelAssignmentButton"
+      )
+      .addEventListener(
+        "click",
+        function() {
+          document.getElementById(
+            "assignmentModal"
+          ).style.display = "none";
+
+          activeAssignmentId = null;
+        }
+      );
+
+    document
+      .getElementById(
+        "manualRequestButton"
+      )
+      .addEventListener(
+        "click",
+        function() {
+          const selectedDate =
+            dashboardDateInput.value;
+
+          document.getElementById(
+            "manualPrimaryDate"
+          ).value = selectedDate;
+
+          document.getElementById(
+            "manualBackupDate"
+          ).value =
+            addDaysToInputDate(
+              selectedDate,
+              1
+            );
+
+          document.getElementById(
+            "manualDeadline"
+          ).value =
+            addDaysToInputDate(
+              selectedDate,
+              1
+            );
+
+          document.getElementById(
+            "manualRequestModal"
+          ).style.display = "flex";
+        }
+      );
+
+    document
+      .getElementById(
+        "cancelManualButton"
+      )
+      .addEventListener(
+        "click",
+        function() {
+          document.getElementById(
+            "manualRequestModal"
+          ).style.display = "none";
+        }
+      );
+
+    document
+      .getElementById(
+        "submitManualButton"
+      )
+      .addEventListener(
+        "click",
+        function() {
+          const quantity =
+            Number(
+              document.getElementById(
+                "manualQuantity"
+              ).value
+            ) || 0;
+
+          const primaryDate =
+            document.getElementById(
+              "manualPrimaryDate"
+            ).value;
+
+          const backupDate =
+            document.getElementById(
+              "manualBackupDate"
+            ).value;
+
+          const deadline =
+            document.getElementById(
+              "manualDeadline"
+            ).value;
+
+          if (
+            !primaryDate ||
+            !backupDate ||
+            !deadline
+          ) {
+            showToast(
+              "Complete all visibility and deadline dates."
+            );
+
+            return;
+          }
+
+          const newRequest = {
+            id: Date.now(),
+
+            plant:
+              document.getElementById(
+                "manualPlant"
+              ).value,
+
+            machine:
+              document.getElementById(
+                "manualMachine"
+              ).value.trim() || "M",
+
+            bottle:
+              document.getElementById(
+                "manualBottle"
+              ).value.trim() ||
+              "Manual COA Request",
+
+            customer:
+              document.getElementById(
+                "manualCustomer"
+              ).value.trim() ||
+              "Customer",
+
+            lot:
+              document.getElementById(
+                "manualLot"
+              ).value.trim() ||
+              "MAN-" +
+              Date.now()
+                .toString()
+                .slice(-5),
+
+            startDate:
+              formatInputDateAsDisplay(
+                primaryDate
+              ),
+
+            endDate:
+              formatInputDateAsDisplay(
+                primaryDate
+              ),
+
+            orderQuantity: quantity,
+            quantityProduced: quantity,
+
+            status: "Pending",
+
+            primaryQC:
+              document.getElementById(
+                "manualPrimary"
+              ).value,
+
+            backupQC:
+              document.getElementById(
+                "manualBackup"
+              ).value,
+
+            primaryVisibleDate:
+              formatInputDateAsDisplay(
+                primaryDate
+              ),
+
+            backupVisibleDate:
+              formatInputDateAsDisplay(
+                backupDate
+              ),
+
+            deadline:
+              formatInputDateAsDisplay(
+                deadline
+              ),
+
+            reminder:
+              "Notification sent",
+
+            escalation:
+              "Not Escalated",
+
+            urgency: "green",
+
+            submitted: false,
+
+            assignmentHistory: []
+          };
+
+          dashboardData.unshift(
+            newRequest
+          );
+
+          saveData();
+
+          document.getElementById(
+            "manualRequestModal"
+          ).style.display = "none";
+
+          renderDashboard();
+
+          showToast(
+            "Manual COA request created. Primary QC sees it first; Backup QC activates on the selected Backup date if incomplete."
+          );
+        }
+      );
+
+    function showToast(message) {
+      const toast =
+        document.getElementById(
+          "toast"
+        );
+
+      toast.textContent = message;
+      toast.style.display = "block";
+
+      setTimeout(function() {
+        toast.style.display = "none";
+      }, 3200);
+    }
+
+    function resetFilters() {
+      roleFilter.value =
+        "Superuser";
+
+      dashboardDateInput.value =
+        "2025-12-08";
+
+      plantFilter.value = "All";
+      statusFilter.value = "All";
+      searchInput.value = "";
 
       renderDashboard();
+    }
+
+    function resetDemoData() {
+      const confirmed =
+        window.confirm(
+          "Reset all demo records, submissions and assignment history?"
+        );
+
+      if (!confirmed) {
+        return;
+      }
+
+      dashboardData =
+        JSON.parse(
+          JSON.stringify(initialData)
+        );
+
+      saveData();
+      resetFilters();
 
       showToast(
-        "Manual COA request created. Primary and Backup QC notified."
+        "Demo data has been reset."
       );
-    });
+    }
 
-  function showToast(message) {
-    const toast = document.getElementById("toast");
+    roleFilter.addEventListener(
+      "change",
+      renderDashboard
+    );
 
-    toast.textContent = message;
-    toast.style.display = "block";
+    dashboardDateInput.addEventListener(
+      "change",
+      renderDashboard
+    );
 
-    setTimeout(function() {
-      toast.style.display = "none";
-    }, 2800);
-  }
+    plantFilter.addEventListener(
+      "change",
+      renderDashboard
+    );
 
-  function resetFilters() {
-    roleFilter.value = "Superuser";
-    plantFilter.value = "All";
-    statusFilter.value = "All";
-    searchInput.value = "";
+    statusFilter.addEventListener(
+      "change",
+      renderDashboard
+    );
+
+    searchInput.addEventListener(
+      "input",
+      renderDashboard
+    );
+
+    document
+      .getElementById(
+        "resetFiltersButton"
+      )
+      .addEventListener(
+        "click",
+        resetFilters
+      );
+
+    document
+      .getElementById(
+        "resetDataButton"
+      )
+      .addEventListener(
+        "click",
+        resetDemoData
+      );
+
+    document
+      .getElementById(
+        "assignmentModal"
+      )
+      .addEventListener(
+        "click",
+        function(event) {
+          if (event.target === this) {
+            this.style.display =
+              "none";
+
+            activeAssignmentId =
+              null;
+          }
+        }
+      );
+
+    document
+      .getElementById(
+        "manualRequestModal"
+      )
+      .addEventListener(
+        "click",
+        function(event) {
+          if (event.target === this) {
+            this.style.display =
+              "none";
+          }
+        }
+      );
 
     renderDashboard();
-  }
-
-  roleFilter.addEventListener("change", renderDashboard);
-  plantFilter.addEventListener("change", renderDashboard);
-  statusFilter.addEventListener("change", renderDashboard);
-  searchInput.addEventListener("input", renderDashboard);
-
-  document
-    .getElementById("resetButton")
-    .addEventListener("click", resetFilters);
-
-  document
-    .getElementById("assignmentModal")
-    .addEventListener("click", function(event) {
-      if (event.target === this) {
-        this.style.display = "none";
-        activeAssignmentId = null;
-      }
-    });
-
-  document
-    .getElementById("manualRequestModal")
-    .addEventListener("click", function(event) {
-      if (event.target === this) {
-        this.style.display = "none";
-      }
-    });
-
-  renderDashboard();
-</script>
+  </script>
 
 </body>
 </html>

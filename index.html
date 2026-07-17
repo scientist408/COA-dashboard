@@ -75,7 +75,7 @@
     }
 
     .container {
-      max-width: 1600px;
+      max-width: 1650px;
       margin: auto;
       padding: 22px;
     }
@@ -91,7 +91,7 @@
     .toolbar {
       display: grid;
       grid-template-columns:
-        repeat(5, minmax(145px, 1fr))
+        repeat(6, minmax(145px, 1fr))
         auto
         auto;
       gap: 12px;
@@ -165,6 +165,24 @@
       color: #77838e;
       cursor: not-allowed;
       font-size: 12px;
+    }
+
+    .show-completed-wrap {
+      display: flex;
+      align-items: center;
+      min-height: 42px;
+      gap: 8px;
+    }
+
+    .show-completed-wrap input {
+      width: auto;
+      height: 18px;
+    }
+
+    .show-completed-wrap span {
+      font-size: 13px;
+      font-weight: bold;
+      color: var(--navy);
     }
 
     .date-message {
@@ -337,7 +355,7 @@
 
     table {
       width: 100%;
-      min-width: 1680px;
+      min-width: 1800px;
       border-collapse: collapse;
       font-size: 12px;
     }
@@ -376,7 +394,7 @@
     }
 
     tr.completed-row td {
-      opacity: 0.55;
+      opacity: 0.58;
     }
 
     .status {
@@ -404,11 +422,6 @@
     .status-assigned {
       background: #dcecf8;
       color: #123a5a;
-    }
-
-    .status-backup {
-      background: #eee5fb;
-      color: #54347d;
     }
 
     .urgency {
@@ -555,9 +568,9 @@
       font-size: 14px;
     }
 
-    @media (max-width: 1200px) {
+    @media (max-width: 1300px) {
       .toolbar {
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: repeat(4, 1fr);
       }
 
       .kpi-section {
@@ -659,7 +672,6 @@
         <input
           id="dashboardDate"
           type="date"
-          value="2025-12-08"
         >
       </div>
 
@@ -703,6 +715,19 @@
           id="searchInput"
           placeholder="Lot, bottle, customer..."
         >
+      </div>
+
+      <div class="field">
+        <label>Completed Records</label>
+
+        <div class="show-completed-wrap">
+          <input
+            id="showCompleted"
+            type="checkbox"
+          >
+
+          <span>Show completed COAs</span>
+        </div>
       </div>
 
       <button
@@ -827,8 +852,8 @@
         <b>Primary QC Visibility</b>
 
         <span>
-          The Primary QC sees the COA task immediately
-          on the Primary visibility date.
+          The Primary QC sees the COA task on the
+          Primary visibility date.
         </span>
       </div>
 
@@ -849,7 +874,7 @@
         <b>Reminder and Escalation</b>
 
         <span>
-          Incomplete tasks generate reminders and can
+          Incomplete tasks generate reminders and may
           be escalated to the Superuser.
         </span>
       </div>
@@ -860,8 +885,8 @@
         <b>COA Submitted</b>
 
         <span>
-          After submission, the COA is removed from the
-          active Primary and Backup QC queues.
+          Submitted COAs leave the active queue but can
+          be restored using Show Completed COAs.
         </span>
       </div>
 
@@ -954,7 +979,7 @@
 
   </main>
 
-  <!-- Manual COA Request Modal -->
+  <!-- Manual Request Modal -->
 
   <div
     class="modal"
@@ -1055,7 +1080,6 @@
           <input
             id="manualPrimaryDate"
             type="date"
-            value="2025-12-08"
           >
         </div>
 
@@ -1065,7 +1089,6 @@
           <input
             id="manualBackupDate"
             type="date"
-            value="2025-12-09"
           >
         </div>
 
@@ -1075,7 +1098,6 @@
           <input
             id="manualDeadline"
             type="date"
-            value="2025-12-09"
           >
         </div>
 
@@ -1103,7 +1125,7 @@
 
   </div>
 
-  <!-- Superuser Assignment Modal -->
+  <!-- Assignment Modal -->
 
   <div
     class="modal"
@@ -1209,7 +1231,7 @@
 
           <textarea
             id="assignmentComments"
-            placeholder="Example: Reassigned due to workload, absence or vacation."
+            placeholder="Example: Reassigned due to workload or absence."
           ></textarea>
         </div>
 
@@ -1280,291 +1302,66 @@
   ></div>
 
   <script>
-    const initialData = [
-      {
-        id: 1,
-        plant: "1002",
-        machine: "A",
-        bottle: "51.5oz Polaris",
-        customer: "P&G",
-        lot: "AXSM-1001",
-        startDate: "12/7/2025",
-        endDate: "12/8/2025",
-        orderQuantity: 80000,
-        quantityProduced: 80000,
-        status: "Pending",
-        primaryQC: "Raj",
-        backupQC: "Jasdip, Ram",
-        primaryVisibleDate: "12/8/2025",
-        backupVisibleDate: "12/9/2025",
-        deadline: "12/9/2025",
-        reminder: "Not Sent",
-        escalation: "Not Escalated",
-        urgency: "yellow",
-        submitted: false,
-        assignmentHistory: []
-      },
+    /*
+      --------------------------------------------------
+      DATE FUNCTIONS
+      --------------------------------------------------
+    */
 
-      {
-        id: 2,
-        plant: "1002",
-        machine: "B",
-        bottle: "35oz Red Brick",
-        customer: "P&G",
-        lot: "AXSM-1002",
-        startDate: "12/7/2025",
-        endDate: "12/8/2025",
-        orderQuantity: 90000,
-        quantityProduced: 90000,
-        status: "Pending",
-        primaryQC: "Raj",
-        backupQC: "Jasdip, Ram",
-        primaryVisibleDate: "12/8/2025",
-        backupVisibleDate: "12/9/2025",
-        deadline: "12/9/2025",
-        reminder: "Not Sent",
-        escalation: "Not Escalated",
-        urgency: "green",
-        submitted: false,
-        assignmentHistory: []
-      },
+    function normalizedToday() {
+      const today = new Date();
 
-      {
-        id: 3,
-        plant: "1002",
-        machine: "C",
-        bottle: "10oz Tide Original",
-        customer: "P&G",
-        lot: "AXSM-1003",
-        startDate: "12/6/2025",
-        endDate: "12/8/2025",
-        orderQuantity: 80000,
-        quantityProduced: 80000,
-        status: "Complete",
-        primaryQC: "Raj",
-        backupQC: "Jasdip, Ram",
-        primaryVisibleDate: "12/8/2025",
-        backupVisibleDate: "12/9/2025",
-        deadline: "12/9/2025",
-        reminder: "COA submitted",
-        escalation: "Not Escalated",
-        urgency: "green",
-        submitted: true,
-        assignmentHistory: []
-      },
+      today.setHours(0, 0, 0, 0);
 
-      {
-        id: 4,
-        plant: "1002",
-        machine: "D",
-        bottle: "32oz White Oval",
-        customer: "P&G",
-        lot: "AXSM-1004",
-        startDate: "12/6/2025",
-        endDate: "12/8/2025",
-        orderQuantity: 70000,
-        quantityProduced: 70000,
-        status: "Escalated",
-        primaryQC: "Raj",
-        backupQC: "Jasdip, Ram",
-        primaryVisibleDate: "12/8/2025",
-        backupVisibleDate: "12/9/2025",
-        deadline: "12/9/2025",
-        reminder: "Reminder sent",
-        escalation: "Escalated",
-        urgency: "red",
-        submitted: false,
-        assignmentHistory: []
-      },
-
-      {
-        id: 5,
-        plant: "1002",
-        machine: "E",
-        bottle: "64oz HDPE Handleware",
-        customer: "P&G",
-        lot: "AXSM-1005",
-        startDate: "12/7/2025",
-        endDate: "12/8/2025",
-        orderQuantity: 75000,
-        quantityProduced: 75000,
-        status: "Pending",
-        primaryQC: "Raj",
-        backupQC: "Jasdip, Ram",
-        primaryVisibleDate: "12/8/2025",
-        backupVisibleDate: "12/9/2025",
-        deadline: "12/9/2025",
-        reminder: "Not Sent",
-        escalation: "Not Escalated",
-        urgency: "yellow",
-        submitted: false,
-        assignmentHistory: []
-      },
-
-      {
-        id: 6,
-        plant: "1011",
-        machine: "F",
-        bottle: "28oz Personal Care",
-        customer: "P&G",
-        lot: "AXSM-1006",
-        startDate: "12/7/2025",
-        endDate: "12/8/2025",
-        orderQuantity: 90000,
-        quantityProduced: 90000,
-        status: "Pending",
-        primaryQC: "Ram",
-        backupQC: "Jasdip, Raj",
-        primaryVisibleDate: "12/8/2025",
-        backupVisibleDate: "12/9/2025",
-        deadline: "12/9/2025",
-        reminder: "Not Sent",
-        escalation: "Not Escalated",
-        urgency: "green",
-        submitted: false,
-        assignmentHistory: []
-      },
-
-      {
-        id: 7,
-        plant: "1011",
-        machine: "G",
-        bottle: "16oz Household",
-        customer: "P&G",
-        lot: "AXSM-1007",
-        startDate: "12/5/2025",
-        endDate: "12/8/2025",
-        orderQuantity: 85000,
-        quantityProduced: 85000,
-        status: "Complete",
-        primaryQC: "Ram",
-        backupQC: "Jasdip, Raj",
-        primaryVisibleDate: "12/8/2025",
-        backupVisibleDate: "12/9/2025",
-        deadline: "12/9/2025",
-        reminder: "COA submitted",
-        escalation: "Not Escalated",
-        urgency: "green",
-        submitted: true,
-        assignmentHistory: []
-      },
-
-      {
-        id: 8,
-        plant: "1006",
-        machine: "H",
-        bottle: "32oz Detergent",
-        customer: "P&G",
-        lot: "AXSM-1008",
-        startDate: "12/7/2025",
-        endDate: "12/8/2025",
-        orderQuantity: 89000,
-        quantityProduced: 89000,
-        status: "Escalated",
-        primaryQC: "Ram",
-        backupQC: "Jasdip, Raj",
-        primaryVisibleDate: "12/8/2025",
-        backupVisibleDate: "12/9/2025",
-        deadline: "12/9/2025",
-        reminder: "Reminder sent",
-        escalation: "Escalated",
-        urgency: "red",
-        submitted: false,
-        assignmentHistory: []
-      },
-
-      {
-        id: 9,
-        plant: "1006",
-        machine: "I",
-        bottle: "40oz Industrial",
-        customer: "P&G",
-        lot: "AXSM-1009",
-        startDate: "12/7/2025",
-        endDate: "12/8/2025",
-        orderQuantity: 99000,
-        quantityProduced: 99000,
-        status: "Pending",
-        primaryQC: "Ram",
-        backupQC: "Jasdip, Raj",
-        primaryVisibleDate: "12/8/2025",
-        backupVisibleDate: "12/9/2025",
-        deadline: "12/9/2025",
-        reminder: "Not Sent",
-        escalation: "Not Escalated",
-        urgency: "yellow",
-        submitted: false,
-        assignmentHistory: []
-      }
-    ];
-
-    const roleFilter =
-      document.getElementById("roleFilter");
-
-    const dashboardDateInput =
-      document.getElementById("dashboardDate");
-
-    const plantFilter =
-      document.getElementById("plantFilter");
-
-    const statusFilter =
-      document.getElementById("statusFilter");
-
-    const searchInput =
-      document.getElementById("searchInput");
-
-    const dashboardBody =
-      document.getElementById("dashboardBody");
-
-    let activeAssignmentId = null;
-
-    let dashboardData = loadDashboardData();
-
-    function loadDashboardData() {
-      const storedData =
-        localStorage.getItem("coaDashboardDateDemo");
-
-      if (!storedData) {
-        return JSON.parse(
-          JSON.stringify(initialData)
-        );
-      }
-
-      try {
-        const parsedData =
-          JSON.parse(storedData);
-
-        return parsedData.map(function(row) {
-          return {
-            ...row,
-
-            primaryVisibleDate:
-              row.primaryVisibleDate ||
-              row.endDate ||
-              "12/8/2025",
-
-            backupVisibleDate:
-              row.backupVisibleDate ||
-              row.deadline ||
-              "12/9/2025",
-
-            assignmentHistory:
-              Array.isArray(row.assignmentHistory)
-                ? row.assignmentHistory
-                : []
-          };
-        });
-      } catch (error) {
-        return JSON.parse(
-          JSON.stringify(initialData)
-        );
-      }
+      return today;
     }
 
-    function saveData() {
-      localStorage.setItem(
-        "coaDashboardDateDemo",
-        JSON.stringify(dashboardData)
+    function addDays(date, days) {
+      const newDate = new Date(date);
+
+      newDate.setDate(
+        newDate.getDate() + days
+      );
+
+      newDate.setHours(0, 0, 0, 0);
+
+      return newDate;
+    }
+
+    function toInputDate(date) {
+      return [
+        date.getFullYear(),
+        String(
+          date.getMonth() + 1
+        ).padStart(2, "0"),
+        String(
+          date.getDate()
+        ).padStart(2, "0")
+      ].join("-");
+    }
+
+    function toDisplayDate(date) {
+      return (
+        (date.getMonth() + 1) +
+        "/" +
+        date.getDate() +
+        "/" +
+        date.getFullYear()
+      );
+    }
+
+    function dateFromToday(offset) {
+      return toDisplayDate(
+        addDays(
+          normalizedToday(),
+          offset
+        )
+      );
+    }
+
+    function todayInputDate() {
+      return toInputDate(
+        normalizedToday()
       );
     }
 
@@ -1573,13 +1370,18 @@
         return new Date(1900, 0, 1);
       }
 
-      const parts = dateText.split("/");
+      const parts =
+        dateText.split("/");
 
-      return new Date(
+      const date = new Date(
         Number(parts[2]),
         Number(parts[0]) - 1,
         Number(parts[1])
       );
+
+      date.setHours(0, 0, 0, 0);
+
+      return date;
     }
 
     function parseInputDate(inputDate) {
@@ -1587,60 +1389,380 @@
         return new Date(1900, 0, 1);
       }
 
-      const parts = inputDate.split("-");
+      const parts =
+        inputDate.split("-");
 
-      return new Date(
+      const date = new Date(
         Number(parts[0]),
         Number(parts[1]) - 1,
         Number(parts[2])
       );
+
+      date.setHours(0, 0, 0, 0);
+
+      return date;
     }
 
-    function formatInputDateAsDisplay(inputDate) {
-      if (!inputDate) {
-        return "";
-      }
-
-      const parts = inputDate.split("-");
-
-      return (
-        Number(parts[1]) +
-        "/" +
-        Number(parts[2]) +
-        "/" +
-        parts[0]
+    function inputDateToDisplay(
+      inputDate
+    ) {
+      return toDisplayDate(
+        parseInputDate(inputDate)
       );
     }
 
-    function formatDateForInput(displayDate) {
-      if (!displayDate) {
-        return "";
-      }
+    /*
+      --------------------------------------------------
+      DEMO DATA
+      All dates are based on today's actual date.
+      --------------------------------------------------
+    */
 
-      const parts = displayDate.split("/");
-
-      return (
-        parts[2] +
-        "-" +
-        String(parts[0]).padStart(2, "0") +
-        "-" +
-        String(parts[1]).padStart(2, "0")
-      );
-    }
-
-    function addDaysToInputDate(inputDate, days) {
-      const date = parseInputDate(inputDate);
-
-      date.setDate(
-        date.getDate() + days
-      );
-
+    function createInitialData() {
       return [
-        date.getFullYear(),
-        String(date.getMonth() + 1).padStart(2, "0"),
-        String(date.getDate()).padStart(2, "0")
-      ].join("-");
+        {
+          id: 1,
+          plant: "1002",
+          machine: "A",
+          bottle: "51.5oz Polaris",
+          customer: "P&G",
+          lot: "AXSM-1001",
+          startDate: dateFromToday(-1),
+          endDate: dateFromToday(0),
+          orderQuantity: 80000,
+          quantityProduced: 80000,
+          status: "Pending",
+          primaryQC: "Raj",
+          backupQC: "Jasdip, Ram",
+          primaryVisibleDate:
+            dateFromToday(0),
+          backupVisibleDate:
+            dateFromToday(1),
+          deadline:
+            dateFromToday(1),
+          reminder: "Not Sent",
+          escalation:
+            "Not Escalated",
+          urgency: "yellow",
+          submitted: false,
+          assignmentHistory: []
+        },
+
+        {
+          id: 2,
+          plant: "1002",
+          machine: "B",
+          bottle: "35oz Red Brick",
+          customer: "P&G",
+          lot: "AXSM-1002",
+          startDate: dateFromToday(-1),
+          endDate: dateFromToday(0),
+          orderQuantity: 90000,
+          quantityProduced: 90000,
+          status: "Pending",
+          primaryQC: "Raj",
+          backupQC: "Jasdip, Ram",
+          primaryVisibleDate:
+            dateFromToday(0),
+          backupVisibleDate:
+            dateFromToday(1),
+          deadline:
+            dateFromToday(1),
+          reminder: "Not Sent",
+          escalation:
+            "Not Escalated",
+          urgency: "green",
+          submitted: false,
+          assignmentHistory: []
+        },
+
+        {
+          id: 3,
+          plant: "1002",
+          machine: "C",
+          bottle: "10oz Tide Original",
+          customer: "P&G",
+          lot: "AXSM-1003",
+          startDate: dateFromToday(-2),
+          endDate: dateFromToday(-1),
+          orderQuantity: 80000,
+          quantityProduced: 80000,
+          status: "Complete",
+          primaryQC: "Raj",
+          backupQC: "Jasdip, Ram",
+          primaryVisibleDate:
+            dateFromToday(-1),
+          backupVisibleDate:
+            dateFromToday(0),
+          deadline:
+            dateFromToday(0),
+          reminder: "COA submitted",
+          escalation:
+            "Not Escalated",
+          urgency: "green",
+          submitted: true,
+          assignmentHistory: []
+        },
+
+        {
+          id: 4,
+          plant: "1002",
+          machine: "D",
+          bottle: "32oz White Oval",
+          customer: "P&G",
+          lot: "AXSM-1004",
+          startDate: dateFromToday(-2),
+          endDate: dateFromToday(-1),
+          orderQuantity: 70000,
+          quantityProduced: 70000,
+          status: "Escalated",
+          primaryQC: "Raj",
+          backupQC: "Jasdip, Ram",
+          primaryVisibleDate:
+            dateFromToday(-1),
+          backupVisibleDate:
+            dateFromToday(0),
+          deadline:
+            dateFromToday(0),
+          reminder:
+            "Reminder sent",
+          escalation: "Escalated",
+          urgency: "red",
+          submitted: false,
+          assignmentHistory: []
+        },
+
+        {
+          id: 5,
+          plant: "1002",
+          machine: "E",
+          bottle:
+            "64oz HDPE Handleware",
+          customer: "P&G",
+          lot: "AXSM-1005",
+          startDate: dateFromToday(-1),
+          endDate: dateFromToday(0),
+          orderQuantity: 75000,
+          quantityProduced: 75000,
+          status: "Pending",
+          primaryQC: "Raj",
+          backupQC: "Jasdip, Ram",
+          primaryVisibleDate:
+            dateFromToday(0),
+          backupVisibleDate:
+            dateFromToday(1),
+          deadline:
+            dateFromToday(1),
+          reminder: "Not Sent",
+          escalation:
+            "Not Escalated",
+          urgency: "yellow",
+          submitted: false,
+          assignmentHistory: []
+        },
+
+        {
+          id: 6,
+          plant: "1011",
+          machine: "F",
+          bottle:
+            "28oz Personal Care",
+          customer: "P&G",
+          lot: "AXSM-1006",
+          startDate: dateFromToday(-1),
+          endDate: dateFromToday(0),
+          orderQuantity: 90000,
+          quantityProduced: 90000,
+          status: "Pending",
+          primaryQC: "Ram",
+          backupQC: "Jasdip, Raj",
+          primaryVisibleDate:
+            dateFromToday(0),
+          backupVisibleDate:
+            dateFromToday(1),
+          deadline:
+            dateFromToday(1),
+          reminder: "Not Sent",
+          escalation:
+            "Not Escalated",
+          urgency: "green",
+          submitted: false,
+          assignmentHistory: []
+        },
+
+        {
+          id: 7,
+          plant: "1011",
+          machine: "G",
+          bottle:
+            "16oz Household",
+          customer: "P&G",
+          lot: "AXSM-1007",
+          startDate: dateFromToday(-2),
+          endDate: dateFromToday(-1),
+          orderQuantity: 85000,
+          quantityProduced: 85000,
+          status: "Complete",
+          primaryQC: "Ram",
+          backupQC: "Jasdip, Raj",
+          primaryVisibleDate:
+            dateFromToday(-1),
+          backupVisibleDate:
+            dateFromToday(0),
+          deadline:
+            dateFromToday(0),
+          reminder:
+            "COA submitted",
+          escalation:
+            "Not Escalated",
+          urgency: "green",
+          submitted: true,
+          assignmentHistory: []
+        },
+
+        {
+          id: 8,
+          plant: "1006",
+          machine: "H",
+          bottle:
+            "32oz Detergent",
+          customer: "P&G",
+          lot: "AXSM-1008",
+          startDate: dateFromToday(-2),
+          endDate: dateFromToday(-1),
+          orderQuantity: 89000,
+          quantityProduced: 89000,
+          status: "Escalated",
+          primaryQC: "Ram",
+          backupQC: "Jasdip, Raj",
+          primaryVisibleDate:
+            dateFromToday(-1),
+          backupVisibleDate:
+            dateFromToday(0),
+          deadline:
+            dateFromToday(0),
+          reminder:
+            "Reminder sent",
+          escalation: "Escalated",
+          urgency: "red",
+          submitted: false,
+          assignmentHistory: []
+        },
+
+        {
+          id: 9,
+          plant: "1006",
+          machine: "I",
+          bottle:
+            "40oz Industrial",
+          customer: "P&G",
+          lot: "AXSM-1009",
+          startDate: dateFromToday(-1),
+          endDate: dateFromToday(0),
+          orderQuantity: 99000,
+          quantityProduced: 99000,
+          status: "Pending",
+          primaryQC: "Ram",
+          backupQC: "Jasdip, Raj",
+          primaryVisibleDate:
+            dateFromToday(0),
+          backupVisibleDate:
+            dateFromToday(1),
+          deadline:
+            dateFromToday(1),
+          reminder: "Not Sent",
+          escalation:
+            "Not Escalated",
+          urgency: "yellow",
+          submitted: false,
+          assignmentHistory: []
+        }
+      ];
     }
+
+    /*
+      --------------------------------------------------
+      ELEMENTS AND DATA STORAGE
+      --------------------------------------------------
+    */
+
+    const storageKey =
+      "coaDashboardCurrentDateDemoV3";
+
+    const roleFilter =
+      document.getElementById(
+        "roleFilter"
+      );
+
+    const dashboardDateInput =
+      document.getElementById(
+        "dashboardDate"
+      );
+
+    const plantFilter =
+      document.getElementById(
+        "plantFilter"
+      );
+
+    const statusFilter =
+      document.getElementById(
+        "statusFilter"
+      );
+
+    const searchInput =
+      document.getElementById(
+        "searchInput"
+      );
+
+    const showCompleted =
+      document.getElementById(
+        "showCompleted"
+      );
+
+    const dashboardBody =
+      document.getElementById(
+        "dashboardBody"
+      );
+
+    dashboardDateInput.value =
+      todayInputDate();
+
+    let activeAssignmentId = null;
+
+    let dashboardData =
+      loadDashboardData();
+
+    function loadDashboardData() {
+      const storedData =
+        localStorage.getItem(
+          storageKey
+        );
+
+      if (!storedData) {
+        return createInitialData();
+      }
+
+      try {
+        return JSON.parse(storedData);
+      } catch (error) {
+        return createInitialData();
+      }
+    }
+
+    function saveData() {
+      localStorage.setItem(
+        storageKey,
+        JSON.stringify(
+          dashboardData
+        )
+      );
+    }
+
+    /*
+      --------------------------------------------------
+      VISIBILITY RULES
+      --------------------------------------------------
+    */
 
     function getDashboardDate() {
       return parseInputDate(
@@ -1650,27 +1772,22 @@
 
     function isSuperuser() {
       return (
-        roleFilter.value === "Superuser" ||
-        roleFilter.value === "Josh"
+        roleFilter.value ===
+          "Superuser" ||
+        roleFilter.value ===
+          "Josh"
       );
     }
 
     function getBackupNames(row) {
-      return String(row.backupQC || "")
+      return String(
+        row.backupQC || ""
+      )
         .split(",")
         .map(function(name) {
           return name.trim();
         })
         .filter(Boolean);
-    }
-
-    function isPrimaryForRow(row, userName) {
-      return row.primaryQC === userName;
-    }
-
-    function isBackupForRow(row, userName) {
-      return getBackupNames(row)
-        .includes(userName);
     }
 
     function isIncomplete(row) {
@@ -1684,46 +1801,54 @@
       return (
         isIncomplete(row) &&
         getDashboardDate() >=
-          parseDisplayDate(row.backupVisibleDate)
+          parseDisplayDate(
+            row.backupVisibleDate
+          )
       );
     }
 
-    function isTaskVisibleToSelectedUser(row) {
+    function isTaskVisibleToUser(row) {
       const selectedUser =
         roleFilter.value;
 
-      const dashboardDate =
+      const selectedDate =
         getDashboardDate();
 
       if (isSuperuser()) {
+        if (
+          row.submitted &&
+          !showCompleted.checked
+        ) {
+          return false;
+        }
+
         return true;
       }
 
-      /*
-        Completed COAs disappear from regular
-        Primary and Backup user queues.
-      */
-
       if (!isIncomplete(row)) {
-        return false;
+        return showCompleted.checked;
       }
 
-      if (
-        isPrimaryForRow(row, selectedUser)
-      ) {
+      const isPrimary =
+        row.primaryQC ===
+        selectedUser;
+
+      const isBackup =
+        getBackupNames(row)
+          .includes(selectedUser);
+
+      if (isPrimary) {
         return (
-          dashboardDate >=
+          selectedDate >=
           parseDisplayDate(
             row.primaryVisibleDate
           )
         );
       }
 
-      if (
-        isBackupForRow(row, selectedUser)
-      ) {
+      if (isBackup) {
         return (
-          dashboardDate >=
+          selectedDate >=
           parseDisplayDate(
             row.backupVisibleDate
           )
@@ -1736,30 +1861,35 @@
     function getViewingRole(row) {
       if (isSuperuser()) {
         return `
-          <span class="visibility-label superuser-label">
+          <span
+            class="visibility-label superuser-label"
+          >
             Superuser
           </span>
         `;
       }
 
       if (
-        row.primaryQC === roleFilter.value
+        row.primaryQC ===
+        roleFilter.value
       ) {
         return `
-          <span class="visibility-label primary-label">
+          <span
+            class="visibility-label primary-label"
+          >
             Primary QC
           </span>
         `;
       }
 
       if (
-        isBackupForRow(
-          row,
-          roleFilter.value
-        )
+        getBackupNames(row)
+          .includes(roleFilter.value)
       ) {
         return `
-          <span class="visibility-label backup-label">
+          <span
+            class="visibility-label backup-label"
+          >
             Backup Activated
           </span>
         `;
@@ -1782,16 +1912,18 @@
 
       return dashboardData.filter(
         function(row) {
-          const userVisibilityMatches =
-            isTaskVisibleToSelectedUser(row);
+          const visible =
+            isTaskVisibleToUser(row);
 
           const plantMatches =
             selectedPlant === "All" ||
-            row.plant === selectedPlant;
+            row.plant ===
+              selectedPlant;
 
           const statusMatches =
             selectedStatus === "All" ||
-            row.status === selectedStatus;
+            row.status ===
+              selectedStatus;
 
           const searchableText = [
             row.plant,
@@ -1812,7 +1944,7 @@
             );
 
           return (
-            userVisibilityMatches &&
+            visible &&
             plantMatches &&
             statusMatches &&
             searchMatches
@@ -1820,6 +1952,12 @@
         }
       );
     }
+
+    /*
+      --------------------------------------------------
+      DASHBOARD RENDERING
+      --------------------------------------------------
+    */
 
     function urgencyIcon(urgency) {
       if (urgency === "red") {
@@ -1855,7 +1993,9 @@
     function escalationClass(
       escalation
     ) {
-      if (escalation === "Escalated") {
+      if (
+        escalation === "Escalated"
+      ) {
         return "status-escalated";
       }
 
@@ -1870,7 +2010,8 @@
     }
 
     function renderDashboard() {
-      const rows = getFilteredData();
+      const rows =
+        getFilteredData();
 
       if (!rows.length) {
         dashboardBody.innerHTML = `
@@ -1886,7 +2027,7 @@
       } else {
         dashboardBody.innerHTML =
           rows.map(function(row) {
-            const rowClass = [
+            const rowClasses = [
               row.escalation ===
               "Escalated"
                 ? "escalated-row"
@@ -1923,7 +2064,7 @@
             }
 
             return `
-              <tr class="${rowClass}">
+              <tr class="${rowClasses}">
                 <td>${row.plant}</td>
                 <td>${row.machine}</td>
                 <td>${row.bottle}</td>
@@ -2011,25 +2152,34 @@
     function updateKPIs(rows) {
       const pending =
         rows.filter(function(row) {
-          return row.status === "Pending";
+          return (
+            row.status === "Pending"
+          );
         }).length;
 
       const escalated =
         rows.filter(function(row) {
           return (
-            row.status === "Escalated" ||
-            row.escalation === "Escalated"
+            row.status ===
+              "Escalated" ||
+            row.escalation ===
+              "Escalated"
           );
         }).length;
 
       const completed =
         rows.filter(function(row) {
-          return row.status === "Complete";
+          return (
+            row.status ===
+            "Complete"
+          );
         }).length;
 
       const backupActivated =
         rows.filter(function(row) {
-          return isBackupActivated(row);
+          return (
+            isBackupActivated(row)
+          );
         }).length;
 
       const completionRate =
@@ -2043,23 +2193,28 @@
 
       document.getElementById(
         "visibleCount"
-      ).textContent = rows.length;
+      ).textContent =
+        rows.length;
 
       document.getElementById(
         "pendingCount"
-      ).textContent = pending;
+      ).textContent =
+        pending;
 
       document.getElementById(
         "escalatedCount"
-      ).textContent = escalated;
+      ).textContent =
+        escalated;
 
       document.getElementById(
         "completedCount"
-      ).textContent = completed;
+      ).textContent =
+        completed;
 
       document.getElementById(
         "backupActivatedCount"
-      ).textContent = backupActivated;
+      ).textContent =
+        backupActivated;
 
       document.getElementById(
         "completionRate"
@@ -2085,20 +2240,20 @@
             : "Superuser Dashboard";
 
         subtitle.textContent =
-          "Showing all COA tasks, dates, escalations and reassignment controls.";
+          "Showing COA records based on the selected date, status and completion filters.";
       } else {
         title.textContent =
           roleFilter.value +
           " — COA Dashboard";
 
         subtitle.textContent =
-          "Primary tasks appear from the Primary visibility date. Backup tasks appear only after Backup activation and only while incomplete.";
+          "Primary tasks appear first. Backup tasks appear only after the Backup visibility date when incomplete.";
       }
     }
 
     function updateDateMessage() {
-      const displayDate =
-        formatInputDateAsDisplay(
+      const selectedDate =
+        inputDateToDisplay(
           dashboardDateInput.value
         );
 
@@ -2113,24 +2268,30 @@
       if (isSuperuser()) {
         message.innerHTML =
           "<strong>Dashboard date: " +
-          displayDate +
-          ".</strong> The Superuser can see all COAs regardless of Primary or Backup activation dates.";
+          selectedDate +
+          ".</strong> The Superuser can view records across all Primary and Backup assignments.";
       } else if (
         selectedUser === "Jasdip"
       ) {
         message.innerHTML =
           "<strong>Dashboard date: " +
-          displayDate +
-          ".</strong> Jasdip sees only incomplete COAs where the Backup visibility date has been reached.";
+          selectedDate +
+          ".</strong> Jasdip sees incomplete Backup assignments only when their Backup visibility date has arrived.";
       } else {
         message.innerHTML =
           "<strong>Dashboard date: " +
-          displayDate +
+          selectedDate +
           ".</strong> " +
           selectedUser +
-          " sees Primary assignments from the Primary visibility date and Backup assignments only after Backup activation.";
+          " sees Primary assignments from the Primary visibility date and Backup assignments after Backup activation.";
       }
     }
+
+    /*
+      --------------------------------------------------
+      SUBMIT / REOPEN COA
+      --------------------------------------------------
+    */
 
     window.toggleSubmitted =
       function(id, checked) {
@@ -2156,6 +2317,9 @@
             "COA submitted";
         } else {
           row.status = "Pending";
+          row.escalation =
+            "Not Escalated";
+          row.urgency = "yellow";
           row.reminder =
             "Task reopened";
         }
@@ -2165,10 +2329,16 @@
 
         showToast(
           checked
-            ? "COA marked as submitted. It is removed from regular QC queues."
-            : "COA task reopened."
+            ? "COA marked submitted. Turn on Show Completed COAs to bring it back."
+            : "COA reopened and returned to the active queue."
         );
       };
+
+    /*
+      --------------------------------------------------
+      SUPERUSER ASSIGNMENT
+      --------------------------------------------------
+    */
 
     window.openAssignmentManager =
       function(id) {
@@ -2189,7 +2359,8 @@
 
         if (
           !row ||
-          row.escalation !== "Escalated"
+          row.escalation !==
+            "Escalated"
         ) {
           return;
         }
@@ -2198,23 +2369,28 @@
 
         document.getElementById(
           "assignmentPlant"
-        ).textContent = row.plant;
+        ).textContent =
+          row.plant;
 
         document.getElementById(
           "assignmentMachine"
-        ).textContent = row.machine;
+        ).textContent =
+          row.machine;
 
         document.getElementById(
           "assignmentBottle"
-        ).textContent = row.bottle;
+        ).textContent =
+          row.bottle;
 
         document.getElementById(
           "assignmentLot"
-        ).textContent = row.lot;
+        ).textContent =
+          row.lot;
 
         document.getElementById(
           "assignmentCurrentOwner"
-        ).textContent = row.primaryQC;
+        ).textContent =
+          row.primaryQC;
 
         document.getElementById(
           "assignmentEscalation"
@@ -2223,31 +2399,17 @@
 
         document.getElementById(
           "assignTo"
-        ).value = row.primaryQC;
+        ).value =
+          row.primaryQC;
 
         const firstBackup =
           getBackupNames(row)[0];
 
-        const backupOptions =
-          Array.from(
-            document.getElementById(
-              "assignBackup"
-            ).options
-          );
-
-        if (
-          backupOptions.some(
-            function(option) {
-              return (
-                option.value ===
-                firstBackup
-              );
-            }
-          )
-        ) {
+        if (firstBackup) {
           document.getElementById(
             "assignBackup"
-          ).value = firstBackup;
+          ).value =
+            firstBackup;
         }
 
         document.getElementById(
@@ -2258,20 +2420,25 @@
         document.getElementById(
           "newBackupVisibleDate"
         ).value =
-          addDaysToInputDate(
-            dashboardDateInput.value,
-            1
+          toInputDate(
+            addDays(
+              getDashboardDate(),
+              1
+            )
           );
 
         document.getElementById(
           "assignmentComments"
         ).value = "";
 
-        renderAssignmentHistory(row);
+        renderAssignmentHistory(
+          row
+        );
 
         document.getElementById(
           "assignmentModal"
-        ).style.display = "flex";
+        ).style.display =
+          "flex";
       };
 
     function renderAssignmentHistory(
@@ -2375,7 +2542,8 @@
             row.primaryQC;
 
           if (
-            newOwner === originalOwner
+            newOwner ===
+            originalOwner
           ) {
             showToast(
               "Please select a different Primary QC user."
@@ -2389,7 +2557,7 @@
             !newBackupDate
           ) {
             showToast(
-              "Select both Primary and Backup visibility dates."
+              "Select both visibility dates."
             );
 
             return;
@@ -2409,20 +2577,24 @@
             comments: comments
           });
 
-          row.primaryQC = newOwner;
-          row.backupQC = newBackup;
+          row.primaryQC =
+            newOwner;
+
+          row.backupQC =
+            newBackup;
 
           row.primaryVisibleDate =
-            formatInputDateAsDisplay(
+            inputDateToDisplay(
               newPrimaryDate
             );
 
           row.backupVisibleDate =
-            formatInputDateAsDisplay(
+            inputDateToDisplay(
               newBackupDate
             );
 
-          row.status = "Pending";
+          row.status =
+            "Assigned by Superuser";
 
           row.escalation =
             "Assigned by Superuser";
@@ -2432,59 +2604,32 @@
           row.reminder =
             "Reassignment alert sent";
 
-          const notifyNew =
-            document.getElementById(
-              "notifyNewOwner"
-            ).checked;
-
-          const notifyOriginal =
-            document.getElementById(
-              "notifyOriginalOwner"
-            ).checked;
-
           saveData();
 
           document.getElementById(
             "assignmentModal"
-          ).style.display = "none";
+          ).style.display =
+            "none";
 
           activeAssignmentId = null;
 
           renderDashboard();
 
-          let message =
+          showToast(
             "COA reassigned from " +
             originalOwner +
             " to " +
             newOwner +
-            ".";
-
-          if (
-            notifyNew ||
-            notifyOriginal
-          ) {
-            message +=
-              " Notification simulated.";
-          }
-
-          showToast(message);
+            ". Notification simulated."
+          );
         }
       );
 
-    document
-      .getElementById(
-        "cancelAssignmentButton"
-      )
-      .addEventListener(
-        "click",
-        function() {
-          document.getElementById(
-            "assignmentModal"
-          ).style.display = "none";
-
-          activeAssignmentId = null;
-        }
-      );
+    /*
+      --------------------------------------------------
+      MANUAL REQUEST
+      --------------------------------------------------
+    */
 
     document
       .getElementById(
@@ -2494,44 +2639,39 @@
         "click",
         function() {
           const selectedDate =
-            dashboardDateInput.value;
+            getDashboardDate();
 
           document.getElementById(
             "manualPrimaryDate"
-          ).value = selectedDate;
+          ).value =
+            toInputDate(
+              selectedDate
+            );
 
           document.getElementById(
             "manualBackupDate"
           ).value =
-            addDaysToInputDate(
-              selectedDate,
-              1
+            toInputDate(
+              addDays(
+                selectedDate,
+                1
+              )
             );
 
           document.getElementById(
             "manualDeadline"
           ).value =
-            addDaysToInputDate(
-              selectedDate,
-              1
+            toInputDate(
+              addDays(
+                selectedDate,
+                1
+              )
             );
 
           document.getElementById(
             "manualRequestModal"
-          ).style.display = "flex";
-        }
-      );
-
-    document
-      .getElementById(
-        "cancelManualButton"
-      )
-      .addEventListener(
-        "click",
-        function() {
-          document.getElementById(
-            "manualRequestModal"
-          ).style.display = "none";
+          ).style.display =
+            "flex";
         }
       );
 
@@ -2570,7 +2710,7 @@
             !deadline
           ) {
             showToast(
-              "Complete all visibility and deadline dates."
+              "Complete all dates."
             );
 
             return;
@@ -2587,7 +2727,8 @@
             machine:
               document.getElementById(
                 "manualMachine"
-              ).value.trim() || "M",
+              ).value.trim() ||
+              "M",
 
             bottle:
               document.getElementById(
@@ -2611,17 +2752,20 @@
                 .slice(-5),
 
             startDate:
-              formatInputDateAsDisplay(
+              inputDateToDisplay(
                 primaryDate
               ),
 
             endDate:
-              formatInputDateAsDisplay(
+              inputDateToDisplay(
                 primaryDate
               ),
 
-            orderQuantity: quantity,
-            quantityProduced: quantity,
+            orderQuantity:
+              quantity,
+
+            quantityProduced:
+              quantity,
 
             status: "Pending",
 
@@ -2636,17 +2780,17 @@
               ).value,
 
             primaryVisibleDate:
-              formatInputDateAsDisplay(
+              inputDateToDisplay(
                 primaryDate
               ),
 
             backupVisibleDate:
-              formatInputDateAsDisplay(
+              inputDateToDisplay(
                 backupDate
               ),
 
             deadline:
-              formatInputDateAsDisplay(
+              inputDateToDisplay(
                 deadline
               ),
 
@@ -2671,40 +2815,70 @@
 
           document.getElementById(
             "manualRequestModal"
-          ).style.display = "none";
+          ).style.display =
+            "none";
 
           renderDashboard();
 
           showToast(
-            "Manual COA request created. Primary QC sees it first; Backup QC activates on the selected Backup date if incomplete."
+            "Manual COA request created."
           );
         }
       );
 
-    function showToast(message) {
-      const toast =
-        document.getElementById(
-          "toast"
-        );
+    /*
+      --------------------------------------------------
+      BUTTONS AND EVENTS
+      --------------------------------------------------
+    */
 
-      toast.textContent = message;
-      toast.style.display = "block";
+    document
+      .getElementById(
+        "cancelAssignmentButton"
+      )
+      .addEventListener(
+        "click",
+        function() {
+          document.getElementById(
+            "assignmentModal"
+          ).style.display =
+            "none";
 
-      setTimeout(function() {
-        toast.style.display = "none";
-      }, 3200);
-    }
+          activeAssignmentId = null;
+        }
+      );
+
+    document
+      .getElementById(
+        "cancelManualButton"
+      )
+      .addEventListener(
+        "click",
+        function() {
+          document.getElementById(
+            "manualRequestModal"
+          ).style.display =
+            "none";
+        }
+      );
 
     function resetFilters() {
       roleFilter.value =
         "Superuser";
 
       dashboardDateInput.value =
-        "2025-12-08";
+        todayInputDate();
 
-      plantFilter.value = "All";
-      statusFilter.value = "All";
+      plantFilter.value =
+        "All";
+
+      statusFilter.value =
+        "All";
+
       searchInput.value = "";
+
+      showCompleted.checked =
+        false;
 
       renderDashboard();
     }
@@ -2712,7 +2886,7 @@
     function resetDemoData() {
       const confirmed =
         window.confirm(
-          "Reset all demo records, submissions and assignment history?"
+          "Reset all demo records, assignments and submission changes using today's current date?"
         );
 
       if (!confirmed) {
@@ -2720,16 +2894,32 @@
       }
 
       dashboardData =
-        JSON.parse(
-          JSON.stringify(initialData)
-        );
+        createInitialData();
 
       saveData();
       resetFilters();
 
       showToast(
-        "Demo data has been reset."
+        "Demo data reset using today's date."
       );
+    }
+
+    function showToast(message) {
+      const toast =
+        document.getElementById(
+          "toast"
+        );
+
+      toast.textContent =
+        message;
+
+      toast.style.display =
+        "block";
+
+      setTimeout(function() {
+        toast.style.display =
+          "none";
+      }, 3200);
     }
 
     roleFilter.addEventListener(
@@ -2754,6 +2944,11 @@
 
     searchInput.addEventListener(
       "input",
+      renderDashboard
+    );
+
+    showCompleted.addEventListener(
+      "change",
       renderDashboard
     );
 
@@ -2782,7 +2977,9 @@
       .addEventListener(
         "click",
         function(event) {
-          if (event.target === this) {
+          if (
+            event.target === this
+          ) {
             this.style.display =
               "none";
 
@@ -2799,7 +2996,9 @@
       .addEventListener(
         "click",
         function(event) {
-          if (event.target === this) {
+          if (
+            event.target === this
+          ) {
             this.style.display =
               "none";
           }

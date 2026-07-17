@@ -1,510 +1,1654 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <title>COA Dashboard Demo</title>
+
   <style>
-    :root{
-      --navy:#123a5a;
-      --blue:#2f6f9f;
-      --light-blue:#dcecf8;
-      --header-blue:#a9cce8;
-      --bg:#f4f7fa;
-      --card:#ffffff;
-      --text:#17212b;
-      --muted:#617080;
-      --border:#c7d2dc;
-      --warning:#f7c948;
-      --danger:#d64545;
-      --success:#2c9b63;
-      --shadow:0 8px 28px rgba(25,55,80,.10);
+    :root {
+      --navy: #123a5a;
+      --blue: #2f6f9f;
+      --light-blue: #a9cce8;
+      --background: #f4f7fa;
+      --white: #ffffff;
+      --text: #17212b;
+      --muted: #617080;
+      --border: #c7d2dc;
+      --yellow: #f7c948;
+      --red: #d64545;
+      --green: #2c9b63;
+      --shadow: 0 8px 28px rgba(25, 55, 80, 0.10);
     }
 
-    *{box-sizing:border-box}
-    body{
-      margin:0;
-      font-family:Arial, Helvetica, sans-serif;
-      background:var(--bg);
-      color:var(--text);
+    * {
+      box-sizing: border-box;
     }
 
-    .topbar{
-      background:linear-gradient(135deg,var(--navy),var(--blue));
-      color:#fff;
-      padding:18px 24px;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:16px;
-      flex-wrap:wrap;
-      box-shadow:var(--shadow);
-    }
-    .brand h1{margin:0;font-size:26px}
-    .brand p{margin:5px 0 0;font-size:13px;opacity:.85}
-    .demo-badge{
-      background:#fff;
-      color:var(--navy);
-      border-radius:999px;
-      padding:8px 14px;
-      font-weight:700;
-      font-size:12px;
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--background);
+      color: var(--text);
     }
 
-    .container{max-width:1500px;margin:0 auto;padding:22px}
-    .toolbar,.kpis,.panel{background:var(--card);border:1px solid var(--border);box-shadow:var(--shadow)}
-    .toolbar{
-      padding:16px;
-      border-radius:14px;
-      display:grid;
-      grid-template-columns:repeat(6,minmax(140px,1fr));
-      gap:12px;
-      align-items:end;
+    .topbar {
+      background: linear-gradient(135deg, var(--navy), var(--blue));
+      color: white;
+      padding: 18px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+      flex-wrap: wrap;
+      box-shadow: var(--shadow);
     }
-    .field label{
-      display:block;
-      font-size:12px;
-      font-weight:700;
-      margin-bottom:6px;
-      color:var(--muted);
-    }
-    select,input{
-      width:100%;
-      border:1px solid var(--border);
-      border-radius:8px;
-      padding:10px 11px;
-      font-size:14px;
-      background:#fff;
-    }
-    .btn{
-      border:0;
-      border-radius:8px;
-      padding:11px 14px;
-      font-weight:700;
-      cursor:pointer;
-    }
-    .btn-primary{background:var(--blue);color:white}
-    .btn-secondary{background:#e9eef3;color:var(--navy)}
-    .btn-danger{background:var(--danger);color:white}
-    .btn:hover{filter:brightness(.97)}
 
-    .kpis{
-      margin-top:18px;
-      padding:16px;
-      border-radius:14px;
-      display:grid;
-      grid-template-columns:repeat(6,minmax(150px,1fr));
-      gap:12px;
+    .topbar h1 {
+      margin: 0;
+      font-size: 27px;
     }
-    .kpi{
-      border-left:5px solid var(--blue);
-      background:#f8fbfd;
-      border-radius:10px;
-      padding:14px;
-    }
-    .kpi.warning{border-left-color:var(--warning)}
-    .kpi.danger{border-left-color:var(--danger)}
-    .kpi.success{border-left-color:var(--success)}
-    .kpi .label{font-size:12px;color:var(--muted);font-weight:700}
-    .kpi .value{font-size:28px;font-weight:800;margin-top:6px}
 
-    .panel{margin-top:18px;border-radius:14px;overflow:hidden}
-    .panel-head{
-      padding:16px 18px;
-      display:flex;
-      justify-content:space-between;
-      gap:12px;
-      align-items:center;
-      flex-wrap:wrap;
-      border-bottom:1px solid var(--border);
-      background:#fbfdff;
+    .topbar p {
+      margin: 5px 0 0;
+      font-size: 13px;
+      opacity: 0.85;
     }
-    .panel-head h2{font-size:19px;margin:0}
-    .panel-head p{font-size:12px;color:var(--muted);margin:4px 0 0}
-    .legend{display:flex;gap:12px;flex-wrap:wrap;font-size:12px}
-    .dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:5px}
-    .dot.green{background:var(--success)}
-    .dot.yellow{background:var(--warning)}
-    .dot.red{background:var(--danger)}
 
-    .table-wrap{overflow:auto}
-    table{
-      width:100%;
-      border-collapse:collapse;
-      min-width:1380px;
-      font-size:12px;
+    .demo-badge {
+      background: white;
+      color: var(--navy);
+      padding: 8px 14px;
+      border-radius: 30px;
+      font-weight: bold;
+      font-size: 12px;
     }
-    th{
-      background:var(--header-blue);
-      color:#0d263a;
-      position:sticky;
-      top:0;
-      z-index:1;
-      padding:10px 7px;
-      border:1px solid #7896ad;
-      text-align:center;
-      white-space:nowrap;
-    }
-    td{
-      padding:8px 7px;
-      border:1px solid #c3cbd2;
-      text-align:center;
-      background:#fff;
-      white-space:nowrap;
-    }
-    tbody tr:nth-child(even) td{background:#f4f4f4}
-    tbody tr:hover td{background:#eef7fd}
-    tr.overdue td{border-top:2px solid var(--danger);border-bottom:2px solid var(--danger)}
-    .status{
-      display:inline-flex;
-      align-items:center;
-      border-radius:999px;
-      padding:4px 8px;
-      font-weight:700;
-    }
-    .status.pending{background:#fff2be;color:#715900}
-    .status.complete{background:#d9f1e5;color:#17623e}
-    .status.escalated{background:#ffd9d9;color:#8e1919}
-    .urgency{font-size:18px}
-    .checkbox-cell input{width:18px;height:18px;cursor:pointer}
-    .completed-row td{opacity:.55}
-    .completed-row .status{opacity:1}
 
-    .workflow{
-      display:grid;
-      grid-template-columns:repeat(5,1fr);
-      gap:10px;
-      margin:18px 0 0;
+    .container {
+      max-width: 1550px;
+      margin: auto;
+      padding: 22px;
     }
-    .step{
-      background:#fff;
-      border:1px solid var(--border);
-      border-radius:12px;
-      padding:14px;
-      position:relative;
-      box-shadow:var(--shadow);
-      min-height:100px;
-    }
-    .step:not(:last-child)::after{
-      content:"→";
-      position:absolute;
-      right:-17px;
-      top:34%;
-      font-size:24px;
-      color:var(--blue);
-      z-index:2;
-      font-weight:800;
-    }
-    .step .n{
-      width:28px;height:28px;border-radius:50%;
-      background:var(--blue);color:#fff;
-      display:grid;place-items:center;
-      font-weight:800;margin-bottom:8px;
-    }
-    .step b{display:block;margin-bottom:4px}
-    .step span{font-size:12px;color:var(--muted);line-height:1.4}
 
-    .toast{
-      position:fixed;
-      right:20px;
-      bottom:20px;
-      background:#17212b;
-      color:white;
-      padding:12px 16px;
-      border-radius:10px;
-      box-shadow:var(--shadow);
-      display:none;
-      max-width:360px;
-      z-index:10;
+    .toolbar,
+    .kpi-section,
+    .panel {
+      background: white;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
     }
-    .modal{
-      position:fixed;inset:0;
-      background:rgba(15,31,44,.55);
-      display:none;align-items:center;justify-content:center;
-      padding:20px;z-index:20;
-    }
-    .modal-card{
-      width:min(640px,100%);
-      background:#fff;border-radius:16px;
-      box-shadow:var(--shadow);
-      padding:20px;
-    }
-    .modal-card h3{margin:0 0 14px}
-    .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-    .modal-actions{display:flex;justify-content:flex-end;gap:10px;margin-top:16px}
-    .small-note{font-size:11px;color:var(--muted);margin-top:8px}
 
-    @media(max-width:1050px){
-      .toolbar{grid-template-columns:repeat(3,1fr)}
-      .kpis{grid-template-columns:repeat(3,1fr)}
-      .workflow{grid-template-columns:1fr}
-      .step:not(:last-child)::after{content:"↓";right:auto;left:50%;top:auto;bottom:-22px}
+    .toolbar {
+      display: grid;
+      grid-template-columns: repeat(6, minmax(140px, 1fr));
+      gap: 12px;
+      align-items: end;
+      padding: 16px;
+      border-radius: 14px;
     }
-    @media(max-width:650px){
-      .container{padding:12px}
-      .toolbar,.kpis{grid-template-columns:1fr 1fr}
-      .form-grid{grid-template-columns:1fr}
-      .brand h1{font-size:21px}
+
+    .field label {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 12px;
+      font-weight: bold;
+      color: var(--muted);
+    }
+
+    select,
+    input,
+    textarea {
+      width: 100%;
+      padding: 10px 11px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: white;
+      font-size: 14px;
+    }
+
+    textarea {
+      min-height: 80px;
+      resize: vertical;
+    }
+
+    button {
+      border: none;
+      border-radius: 8px;
+      padding: 11px 14px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .btn-primary {
+      background: var(--blue);
+      color: white;
+    }
+
+    .btn-secondary {
+      background: #e9eef3;
+      color: var(--navy);
+    }
+
+    .btn-assign {
+      background: var(--navy);
+      color: white;
+      padding: 7px 11px;
+      font-size: 12px;
+    }
+
+    .btn-disabled {
+      background: #d8e0e7;
+      color: #77838e;
+      cursor: not-allowed;
+      padding: 7px 11px;
+      font-size: 12px;
+    }
+
+    button:hover:not(:disabled) {
+      filter: brightness(0.96);
+    }
+
+    .kpi-section {
+      margin-top: 18px;
+      padding: 16px;
+      border-radius: 14px;
+      display: grid;
+      grid-template-columns: repeat(6, minmax(150px, 1fr));
+      gap: 12px;
+    }
+
+    .kpi {
+      background: #f8fbfd;
+      border-left: 5px solid var(--blue);
+      border-radius: 10px;
+      padding: 14px;
+    }
+
+    .kpi.warning {
+      border-left-color: var(--yellow);
+    }
+
+    .kpi.danger {
+      border-left-color: var(--red);
+    }
+
+    .kpi.success {
+      border-left-color: var(--green);
+    }
+
+    .kpi-label {
+      font-size: 12px;
+      color: var(--muted);
+      font-weight: bold;
+    }
+
+    .kpi-value {
+      margin-top: 6px;
+      font-size: 28px;
+      font-weight: bold;
+    }
+
+    .workflow {
+      margin-top: 18px;
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 10px;
+    }
+
+    .workflow-step {
+      position: relative;
+      min-height: 110px;
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 14px;
+      box-shadow: var(--shadow);
+    }
+
+    .workflow-step:not(:last-child)::after {
+      content: "→";
+      position: absolute;
+      right: -18px;
+      top: 38%;
+      color: var(--blue);
+      font-size: 25px;
+      font-weight: bold;
+      z-index: 2;
+    }
+
+    .step-number {
+      width: 29px;
+      height: 29px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: var(--blue);
+      color: white;
+      font-weight: bold;
+      margin-bottom: 8px;
+    }
+
+    .workflow-step b {
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    .workflow-step span {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.4;
+    }
+
+    .panel {
+      margin-top: 18px;
+      border-radius: 14px;
+      overflow: hidden;
+    }
+
+    .panel-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      padding: 16px 18px;
+      border-bottom: 1px solid var(--border);
+      background: #fbfdff;
+    }
+
+    .panel-header h2 {
+      margin: 0;
+      font-size: 20px;
+    }
+
+    .panel-header p {
+      margin: 4px 0 0;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .legend {
+      display: flex;
+      gap: 14px;
+      font-size: 12px;
+    }
+
+    .legend-dot {
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      margin-right: 5px;
+      border-radius: 50%;
+    }
+
+    .green {
+      background: var(--green);
+    }
+
+    .yellow {
+      background: var(--yellow);
+    }
+
+    .red {
+      background: var(--red);
+    }
+
+    .table-wrapper {
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      min-width: 1500px;
+      border-collapse: collapse;
+      font-size: 12px;
+    }
+
+    th {
+      position: sticky;
+      top: 0;
+      z-index: 1;
+      padding: 10px 7px;
+      border: 1px solid #7896ad;
+      background: var(--light-blue);
+      color: #0d263a;
+      text-align: center;
+      white-space: nowrap;
+    }
+
+    td {
+      padding: 8px 7px;
+      border: 1px solid #c3cbd2;
+      text-align: center;
+      background: white;
+      white-space: nowrap;
+    }
+
+    tbody tr:nth-child(even) td {
+      background: #f4f4f4;
+    }
+
+    tbody tr:hover td {
+      background: #eef7fd;
+    }
+
+    tr.escalated-row td {
+      border-top: 2px solid var(--red);
+      border-bottom: 2px solid var(--red);
+    }
+
+    tr.completed-row td {
+      opacity: 0.55;
+    }
+
+    .status {
+      display: inline-block;
+      border-radius: 20px;
+      padding: 4px 8px;
+      font-weight: bold;
+    }
+
+    .status-pending {
+      background: #fff2be;
+      color: #715900;
+    }
+
+    .status-complete {
+      background: #d9f1e5;
+      color: #17623e;
+    }
+
+    .status-escalated {
+      background: #ffd9d9;
+      color: #8e1919;
+    }
+
+    .status-assigned {
+      background: #dcecf8;
+      color: #123a5a;
+    }
+
+    .urgency {
+      font-size: 18px;
+    }
+
+    .submit-checkbox {
+      width: 18px;
+      height: 18px;
+      cursor: pointer;
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      background: rgba(15, 31, 44, 0.58);
+    }
+
+    .modal-card {
+      width: min(680px, 100%);
+      max-height: 92vh;
+      overflow-y: auto;
+      background: white;
+      border-radius: 16px;
+      padding: 21px;
+      box-shadow: var(--shadow);
+    }
+
+    .modal-card h3 {
+      margin: 0 0 15px;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .full-width {
+      grid-column: 1 / -1;
+    }
+
+    .modal-actions {
+      margin-top: 18px;
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+    }
+
+    .assignment-summary {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 9px;
+      margin-bottom: 15px;
+      padding: 13px;
+      border-radius: 10px;
+      background: #f4f7fa;
+    }
+
+    .assignment-summary b {
+      display: block;
+      margin-bottom: 3px;
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+    .check-option {
+      margin-top: 10px;
+      font-size: 13px;
+      font-weight: bold;
+    }
+
+    .check-option input {
+      width: auto;
+      margin-right: 7px;
+    }
+
+    .history-list {
+      max-height: 180px;
+      overflow-y: auto;
+      margin-top: 8px;
+      border: 1px solid var(--border);
+      border-radius: 9px;
+      background: #f8fbfd;
+    }
+
+    .history-item {
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--border);
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    .history-item:last-child {
+      border-bottom: none;
+    }
+
+    .toast {
+      display: none;
+      position: fixed;
+      right: 20px;
+      bottom: 20px;
+      z-index: 200;
+      max-width: 390px;
+      padding: 13px 17px;
+      border-radius: 10px;
+      background: #17212b;
+      color: white;
+      box-shadow: var(--shadow);
+    }
+
+    @media (max-width: 1050px) {
+      .toolbar {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      .kpi-section {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      .workflow {
+        grid-template-columns: 1fr;
+      }
+
+      .workflow-step:not(:last-child)::after {
+        content: "↓";
+        top: auto;
+        right: auto;
+        bottom: -23px;
+        left: 50%;
+      }
+    }
+
+    @media (max-width: 650px) {
+      .container {
+        padding: 12px;
+      }
+
+      .toolbar,
+      .kpi-section {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .form-grid,
+      .assignment-summary {
+        grid-template-columns: 1fr;
+      }
     }
   </style>
 </head>
-<body>
-  <header class="topbar">
-    <div class="brand">
-      <h1>COA Dashboard</h1>
-      <p>Certificate of Analysis workflow, ownership, reminders and escalation demo</p>
-    </div>
-    <div class="demo-badge">DEMO DATA</div>
-  </header>
 
-  <main class="container">
-    <section class="toolbar">
-      <div class="field">
-        <label for="role">Dashboard User</label>
-        <select id="role">
-          <option value="all">Superuser — All Plants</option>
-          <option value="Raj">Raj — Primary QC</option>
-          <option value="Ram">Ram — Primary QC</option>
-          <option value="Jasdip">Jasdip — Backup QC</option>
-          <option value="Josh">Josh — Superuser</option>
-        </select>
+<body>
+
+<header class="topbar">
+  <div>
+    <h1>COA Dashboard</h1>
+    <p>Certificate of Analysis workflow, ownership, reminders and escalation demo</p>
+  </div>
+
+  <div class="demo-badge">DEMO DATA</div>
+</header>
+
+<main class="container">
+
+  <section class="toolbar">
+
+    <div class="field">
+      <label for="roleFilter">Dashboard User</label>
+
+      <select id="roleFilter">
+        <option value="Superuser">Superuser — All Plants</option>
+        <option value="Josh">Josh — Superuser</option>
+        <option value="Raj">Raj — Primary QC</option>
+        <option value="Ram">Ram — Primary QC</option>
+        <option value="Jasdip">Jasdip — Backup QC</option>
+      </select>
+    </div>
+
+    <div class="field">
+      <label for="plantFilter">Plant</label>
+
+      <select id="plantFilter">
+        <option value="All">All Plants</option>
+        <option value="1002">1002</option>
+        <option value="1006">1006</option>
+        <option value="1011">1011</option>
+      </select>
+    </div>
+
+    <div class="field">
+      <label for="statusFilter">COA Status</label>
+
+      <select id="statusFilter">
+        <option value="All">All Statuses</option>
+        <option value="Pending">Pending</option>
+        <option value="Escalated">Escalated</option>
+        <option value="Assigned by Superuser">Assigned by Superuser</option>
+        <option value="Complete">Complete</option>
+      </select>
+    </div>
+
+    <div class="field">
+      <label for="searchInput">Search</label>
+      <input id="searchInput" placeholder="Lot, bottle, customer...">
+    </div>
+
+    <button class="btn-secondary" id="resetButton">
+      Reset Filters
+    </button>
+
+    <button class="btn-primary" id="manualRequestButton">
+      + Manual COA Request
+    </button>
+
+  </section>
+
+  <section class="kpi-section">
+
+    <div class="kpi">
+      <div class="kpi-label">Visible COAs</div>
+      <div class="kpi-value" id="visibleCount">0</div>
+    </div>
+
+    <div class="kpi warning">
+      <div class="kpi-label">Pending</div>
+      <div class="kpi-value" id="pendingCount">0</div>
+    </div>
+
+    <div class="kpi danger">
+      <div class="kpi-label">Escalated</div>
+      <div class="kpi-value" id="escalatedCount">0</div>
+    </div>
+
+    <div class="kpi success">
+      <div class="kpi-label">Completed</div>
+      <div class="kpi-value" id="completedCount">0</div>
+    </div>
+
+    <div class="kpi">
+      <div class="kpi-label">Due Today</div>
+      <div class="kpi-value" id="dueTodayCount">0</div>
+    </div>
+
+    <div class="kpi">
+      <div class="kpi-label">Completion Rate</div>
+      <div class="kpi-value" id="completionRate">0%</div>
+    </div>
+
+  </section>
+
+  <section class="workflow">
+
+    <div class="workflow-step">
+      <div class="step-number">1</div>
+      <b>SAP / Production Log</b>
+      <span>Production data is automatically added after the lot is completed.</span>
+    </div>
+
+    <div class="workflow-step">
+      <div class="step-number">2</div>
+      <b>QC Assignment</b>
+      <span>Primary and backup QC users are assigned based on the plant.</span>
+    </div>
+
+    <div class="workflow-step">
+      <div class="step-number">3</div>
+      <b>Deadline Created</b>
+      <span>The system creates a COA deadline, typically 24 hours after production ends.</span>
+    </div>
+
+    <div class="workflow-step">
+      <div class="step-number">4</div>
+      <b>Reminder and Escalation</b>
+      <span>The system sends reminders and escalates overdue COAs.</span>
+    </div>
+
+    <div class="workflow-step">
+      <div class="step-number">5</div>
+      <b>COA Submitted</b>
+      <span>QC checks completion and the task is removed from the active queue.</span>
+    </div>
+
+  </section>
+
+  <section class="panel">
+
+    <div class="panel-header">
+
+      <div>
+        <h2 id="dashboardTitle">Superuser Dashboard</h2>
+        <p id="dashboardSubtitle">Showing all COA tasks across all plants.</p>
       </div>
+
+      <div class="legend">
+        <span><i class="legend-dot green"></i>On track</span>
+        <span><i class="legend-dot yellow"></i>Due soon</span>
+        <span><i class="legend-dot red"></i>Escalated</span>
+      </div>
+
+    </div>
+
+    <div class="table-wrapper">
+
+      <table>
+
+        <thead>
+          <tr>
+            <th>Plant</th>
+            <th>Machine #</th>
+            <th>Bottle Description</th>
+            <th>Customer</th>
+            <th>Lot #</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+            <th>Order Qty</th>
+            <th>Qty Produced</th>
+            <th>COA Status</th>
+            <th>Primary QC</th>
+            <th>Backup QC</th>
+            <th>COA Deadline</th>
+            <th>Reminder Sent</th>
+            <th>Escalation Status</th>
+            <th>Urgency</th>
+            <th>COA Submitted</th>
+            <th>Superuser Action</th>
+          </tr>
+        </thead>
+
+        <tbody id="dashboardBody"></tbody>
+
+      </table>
+
+    </div>
+
+  </section>
+
+</main>
+
+<!-- Manual COA Request Modal -->
+
+<div class="modal" id="manualRequestModal">
+
+  <div class="modal-card">
+
+    <h3>Manual COA Request</h3>
+
+    <div class="form-grid">
+
       <div class="field">
-        <label for="plant">Plant</label>
-        <select id="plant">
-          <option value="all">All plants</option>
+        <label>Plant</label>
+        <select id="manualPlant">
           <option value="1002">1002</option>
           <option value="1006">1006</option>
           <option value="1011">1011</option>
         </select>
       </div>
+
       <div class="field">
-        <label for="statusFilter">COA Status</label>
-        <select id="statusFilter">
-          <option value="all">All statuses</option>
-          <option value="Pending">Pending</option>
-          <option value="Complete">Complete</option>
-          <option value="Escalated">Escalated</option>
+        <label>Machine</label>
+        <input id="manualMachine" placeholder="Example: A">
+      </div>
+
+      <div class="field">
+        <label>Bottle Description</label>
+        <input id="manualBottle" placeholder="Example: 35oz Red Brick">
+      </div>
+
+      <div class="field">
+        <label>Customer</label>
+        <input id="manualCustomer" placeholder="Example: P&G">
+      </div>
+
+      <div class="field">
+        <label>Lot Number</label>
+        <input id="manualLot" placeholder="Example: AXSM-1025">
+      </div>
+
+      <div class="field">
+        <label>Quantity Shipped</label>
+        <input id="manualQuantity" type="number" value="75000">
+      </div>
+
+      <div class="field">
+        <label>Primary QC</label>
+
+        <select id="manualPrimary">
+          <option value="Raj">Raj</option>
+          <option value="Ram">Ram</option>
+          <option value="Jasdip">Jasdip</option>
+          <option value="Pritesh">Pritesh</option>
+          <option value="Kiran">Kiran</option>
         </select>
       </div>
+
       <div class="field">
-        <label for="search">Search</label>
-        <input id="search" placeholder="Lot, bottle, customer..." />
-      </div>
-      <button class="btn btn-secondary" id="resetBtn">Reset Filters</button>
-      <button class="btn btn-primary" id="addBtn">+ Manual COA Request</button>
-    </section>
+        <label>Backup QC</label>
 
-    <section class="kpis">
-      <div class="kpi"><div class="label">Visible COAs</div><div class="value" id="kpiVisible">0</div></div>
-      <div class="kpi warning"><div class="label">Pending</div><div class="value" id="kpiPending">0</div></div>
-      <div class="kpi danger"><div class="label">Escalated</div><div class="value" id="kpiEscalated">0</div></div>
-      <div class="kpi success"><div class="label">Completed</div><div class="value" id="kpiComplete">0</div></div>
-      <div class="kpi"><div class="label">Due Today</div><div class="value" id="kpiDueToday">0</div></div>
-      <div class="kpi"><div class="label">On-Time Rate</div><div class="value" id="kpiRate">0%</div></div>
-    </section>
-
-    <section class="workflow">
-      <div class="step"><div class="n">1</div><b>SAP / Production Log</b><span>Production data is automatically added when the lot is completed.</span></div>
-      <div class="step"><div class="n">2</div><b>QC Assignment</b><span>Primary and backup QC are assigned by plant responsibility matrix.</span></div>
-      <div class="step"><div class="n">3</div><b>Deadline Created</b><span>COA due date is system-generated, typically 24 hours after production end.</span></div>
-      <div class="step"><div class="n">4</div><b>Reminder & Escalation</b><span>Alerts are sent before the due date and escalated when overdue.</span></div>
-      <div class="step"><div class="n">5</div><b>COA Submitted</b><span>QC checks completion; the task is removed from the active queue.</span></div>
-    </section>
-
-    <section class="panel">
-      <div class="panel-head">
-        <div>
-          <h2 id="viewTitle">Superuser Dashboard</h2>
-          <p id="viewSubtitle">Showing all COA tasks across plants.</p>
-        </div>
-        <div class="legend">
-          <span><i class="dot green"></i>On track</span>
-          <span><i class="dot yellow"></i>Due soon</span>
-          <span><i class="dot red"></i>Escalated</span>
-        </div>
+        <select id="manualBackup">
+          <option value="Jasdip">Jasdip</option>
+          <option value="Raj">Raj</option>
+          <option value="Ram">Ram</option>
+          <option value="Pritesh">Pritesh</option>
+          <option value="Kiran">Kiran</option>
+        </select>
       </div>
 
-      <div class="table-wrap">
-        <table>
-          <thead>
-            <tr>
-              <th>Plant</th><th>Machine #</th><th>Bottle Description</th><th>Customer</th>
-              <th>Lot #</th><th>Start Date</th><th>End Date</th><th>Order Qty</th>
-              <th>Qty Produced</th><th>COA Status</th><th>Primary QC</th><th>Backup QC</th>
-              <th>COA Deadline</th><th>Reminder Sent</th><th>Escalation Status</th>
-              <th>Urgency</th><th>COA Submitted</th>
-            </tr>
-          </thead>
-          <tbody id="coaBody"></tbody>
-        </table>
-      </div>
-    </section>
-  </main>
-
-  <div class="toast" id="toast"></div>
-
-  <div class="modal" id="modal">
-    <div class="modal-card">
-      <h3>Manual COA Request</h3>
-      <div class="form-grid">
-        <div class="field"><label>Plant</label><select id="mPlant"><option>1002</option><option>1006</option><option>1011</option></select></div>
-        <div class="field"><label>Machine</label><input id="mMachine" placeholder="Example: A" /></div>
-        <div class="field"><label>Bottle Description</label><input id="mBottle" placeholder="Example: 35oz Red Brick" /></div>
-        <div class="field"><label>Customer</label><input id="mCustomer" placeholder="Example: P&G" /></div>
-        <div class="field"><label>Lot Number</label><input id="mLot" placeholder="Example: AXSM-1025" /></div>
-        <div class="field"><label>Quantity Shipped</label><input id="mQty" type="number" value="75000" /></div>
-        <div class="field"><label>Primary QC</label><select id="mPrimary"><option>Raj</option><option>Ram</option><option>Jasdip</option></select></div>
-        <div class="field"><label>Backup QC</label><select id="mBackup"><option>Jasdip</option><option>Raj</option><option>Ram</option></select></div>
-      </div>
-      <div class="small-note">Submitting creates a new pending task and simulates email/system notification to Primary and Backup QC.</div>
-      <div class="modal-actions">
-        <button class="btn btn-secondary" id="cancelModal">Cancel</button>
-        <button class="btn btn-primary" id="submitRequest">Submit COA Request</button>
-      </div>
     </div>
+
+    <div class="modal-actions">
+      <button class="btn-secondary" id="cancelManualButton">
+        Cancel
+      </button>
+
+      <button class="btn-primary" id="submitManualButton">
+        Submit COA Request
+      </button>
+    </div>
+
   </div>
 
-  <script>
-    const seedData = [
-      {id:1,plant:"1002",machine:"A",bottle:"51.5oz Polaris",customer:"P&G",lot:"AXSM-1001",start:"12/7/2025",end:"12/8/2025",order:80000,produced:80000,status:"Pending",primary:"Raj",backup:"Jasdip, Ram",deadline:"12/9/2025",reminder:"Not Sent",escalation:"Not Escalated",urgency:"yellow",submitted:false},
-      {id:2,plant:"1002",machine:"B",bottle:"35oz Red Brick",customer:"P&G",lot:"AXSM-1002",start:"12/7/2025",end:"12/8/2025",order:90000,produced:90000,status:"Pending",primary:"Raj",backup:"Jasdip, Ram",deadline:"12/9/2025",reminder:"Not Sent",escalation:"Not Escalated",urgency:"green",submitted:false},
-      {id:3,plant:"1002",machine:"C",bottle:"10oz Tide Original",customer:"P&G",lot:"AXSM-1003",start:"12/6/2025",end:"12/8/2025",order:80000,produced:80000,status:"Pending",primary:"Raj",backup:"Jasdip, Ram",deadline:"12/9/2025",reminder:"Not Sent",escalation:"Not Escalated",urgency:"green",submitted:false},
-      {id:4,plant:"1002",machine:"D",bottle:"32oz White Oval",customer:"P&G",lot:"AXSM-1004",start:"12/6/2025",end:"12/8/2025",order:70000,produced:70000,status:"Escalated",primary:"Raj",backup:"Jasdip, Ram",deadline:"12/8/2025",reminder:"12/9/2025",escalation:"Escalated",urgency:"red",submitted:false},
-      {id:5,plant:"1002",machine:"E",bottle:"64oz HDPE Handleware",customer:"P&G",lot:"AXSM-1005",start:"12/7/2025",end:"12/8/2025",order:75000,produced:75000,status:"Pending",primary:"Raj",backup:"Jasdip, Ram",deadline:"12/9/2025",reminder:"Not Sent",escalation:"Not Escalated",urgency:"yellow",submitted:false},
-      {id:6,plant:"1011",machine:"F",bottle:"28oz Personal Care",customer:"P&G",lot:"AXSM-1006",start:"12/7/2025",end:"12/8/2025",order:90000,produced:90000,status:"Pending",primary:"Ram",backup:"Jasdip, Raj",deadline:"12/9/2025",reminder:"Not Sent",escalation:"Not Escalated",urgency:"green",submitted:false},
-      {id:7,plant:"1011",machine:"G",bottle:"16oz Household",customer:"P&G",lot:"AXSM-1007",start:"12/5/2025",end:"12/8/2025",order:85000,produced:85000,status:"Pending",primary:"Ram",backup:"Jasdip, Raj",deadline:"12/9/2025",reminder:"Not Sent",escalation:"Not Escalated",urgency:"green",submitted:false},
-      {id:8,plant:"1006",machine:"H",bottle:"32oz Detergent",customer:"P&G",lot:"AXSM-1008",start:"12/7/2025",end:"12/8/2025",order:89000,produced:89000,status:"Pending",primary:"Ram",backup:"Jasdip, Raj",deadline:"12/9/2025",reminder:"Not Sent",escalation:"Not Escalated",urgency:"green",submitted:false},
-      {id:9,plant:"1006",machine:"I",bottle:"40oz Industrial",customer:"P&G",lot:"AXSM-1009",start:"12/7/2025",end:"12/8/2025",order:99000,produced:99000,status:"Complete",primary:"Ram",backup:"Jasdip, Raj",deadline:"12/9/2025",reminder:"12/9/2025",escalation:"Not Escalated",urgency:"green",submitted:true}
-    ];
+</div>
 
-    let data = JSON.parse(localStorage.getItem("coaDemoData") || "null") || seedData;
-    const body = document.getElementById("coaBody");
+<!-- Superuser Assignment Modal -->
 
-    function filteredData(){
-      const role = document.getElementById("role").value;
-      const plant = document.getElementById("plant").value;
-      const status = document.getElementById("statusFilter").value;
-      const search = document.getElementById("search").value.toLowerCase().trim();
+<div class="modal" id="assignmentModal">
 
-      return data.filter(r => {
-        const roleMatch = role === "all" || role === "Josh" || r.primary === role || r.backup.includes(role);
-        const plantMatch = plant === "all" || r.plant === plant;
-        const statusMatch = status === "all" || r.status === status;
-        const hay = [r.plant,r.machine,r.bottle,r.customer,r.lot,r.primary,r.backup].join(" ").toLowerCase();
-        const searchMatch = !search || hay.includes(search);
-        return roleMatch && plantMatch && statusMatch && searchMatch;
-      });
+  <div class="modal-card">
+
+    <h3>COA Assignment Manager</h3>
+
+    <div class="assignment-summary">
+
+      <div>
+        <b>Plant</b>
+        <span id="assignmentPlant"></span>
+      </div>
+
+      <div>
+        <b>Machine</b>
+        <span id="assignmentMachine"></span>
+      </div>
+
+      <div>
+        <b>Bottle Description</b>
+        <span id="assignmentBottle"></span>
+      </div>
+
+      <div>
+        <b>Lot Number</b>
+        <span id="assignmentLot"></span>
+      </div>
+
+      <div>
+        <b>Current Primary QC</b>
+        <span id="assignmentCurrentOwner"></span>
+      </div>
+
+      <div>
+        <b>Escalation Status</b>
+        <span id="assignmentEscalation"></span>
+      </div>
+
+    </div>
+
+    <div class="form-grid">
+
+      <div class="field">
+        <label for="assignTo">Assign COA To</label>
+
+        <select id="assignTo">
+          <option value="Raj">Raj</option>
+          <option value="Ram">Ram</option>
+          <option value="Jasdip">Jasdip</option>
+          <option value="Pritesh">Pritesh</option>
+          <option value="Kiran">Kiran</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label for="assignBackup">Backup QC</label>
+
+        <select id="assignBackup">
+          <option value="Jasdip">Jasdip</option>
+          <option value="Raj">Raj</option>
+          <option value="Ram">Ram</option>
+          <option value="Pritesh">Pritesh</option>
+          <option value="Kiran">Kiran</option>
+        </select>
+      </div>
+
+      <div class="field full-width">
+        <label for="assignmentComments">Assignment Comments</label>
+
+        <textarea
+          id="assignmentComments"
+          placeholder="Example: Reassigned due to workload, absence, vacation or plant support requirement."
+        ></textarea>
+      </div>
+
+    </div>
+
+    <div class="check-option">
+      <label>
+        <input type="checkbox" id="notifyNewOwner" checked>
+        Notify new assignee
+      </label>
+    </div>
+
+    <div class="check-option">
+      <label>
+        <input type="checkbox" id="notifyOriginalOwner" checked>
+        Notify original owner
+      </label>
+    </div>
+
+    <h4>Assignment History</h4>
+
+    <div class="history-list" id="assignmentHistory">
+      <div class="history-item">No previous assignment history.</div>
+    </div>
+
+    <div class="modal-actions">
+
+      <button class="btn-secondary" id="cancelAssignmentButton">
+        Cancel
+      </button>
+
+      <button class="btn-primary" id="saveAssignmentButton">
+        Assign COA
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+  const initialData = [
+    {
+      id: 1,
+      plant: "1002",
+      machine: "A",
+      bottle: "51.5oz Polaris",
+      customer: "P&G",
+      lot: "AXSM-1001",
+      startDate: "12/7/2025",
+      endDate: "12/8/2025",
+      orderQuantity: 80000,
+      quantityProduced: 80000,
+      status: "Pending",
+      primaryQC: "Raj",
+      backupQC: "Jasdip, Ram",
+      deadline: "12/9/2025",
+      reminder: "Not Sent",
+      escalation: "Not Escalated",
+      urgency: "yellow",
+      submitted: false,
+      assignmentHistory: []
+    },
+    {
+      id: 2,
+      plant: "1002",
+      machine: "B",
+      bottle: "35oz Red Brick",
+      customer: "P&G",
+      lot: "AXSM-1002",
+      startDate: "12/7/2025",
+      endDate: "12/8/2025",
+      orderQuantity: 90000,
+      quantityProduced: 90000,
+      status: "Pending",
+      primaryQC: "Raj",
+      backupQC: "Jasdip, Ram",
+      deadline: "12/9/2025",
+      reminder: "Not Sent",
+      escalation: "Not Escalated",
+      urgency: "green",
+      submitted: false,
+      assignmentHistory: []
+    },
+    {
+      id: 3,
+      plant: "1002",
+      machine: "C",
+      bottle: "10oz Tide Original",
+      customer: "P&G",
+      lot: "AXSM-1003",
+      startDate: "12/6/2025",
+      endDate: "12/8/2025",
+      orderQuantity: 80000,
+      quantityProduced: 80000,
+      status: "Pending",
+      primaryQC: "Raj",
+      backupQC: "Jasdip, Ram",
+      deadline: "12/9/2025",
+      reminder: "Not Sent",
+      escalation: "Not Escalated",
+      urgency: "green",
+      submitted: false,
+      assignmentHistory: []
+    },
+    {
+      id: 4,
+      plant: "1002",
+      machine: "D",
+      bottle: "32oz White Oval",
+      customer: "P&G",
+      lot: "AXSM-1004",
+      startDate: "12/6/2025",
+      endDate: "12/8/2025",
+      orderQuantity: 70000,
+      quantityProduced: 70000,
+      status: "Escalated",
+      primaryQC: "Raj",
+      backupQC: "Jasdip, Ram",
+      deadline: "12/8/2025",
+      reminder: "12/9/2025",
+      escalation: "Escalated",
+      urgency: "red",
+      submitted: false,
+      assignmentHistory: []
+    },
+    {
+      id: 5,
+      plant: "1002",
+      machine: "E",
+      bottle: "64oz HDPE Handleware",
+      customer: "P&G",
+      lot: "AXSM-1005",
+      startDate: "12/7/2025",
+      endDate: "12/8/2025",
+      orderQuantity: 75000,
+      quantityProduced: 75000,
+      status: "Pending",
+      primaryQC: "Raj",
+      backupQC: "Jasdip, Ram",
+      deadline: "12/9/2025",
+      reminder: "Not Sent",
+      escalation: "Not Escalated",
+      urgency: "yellow",
+      submitted: false,
+      assignmentHistory: []
+    },
+    {
+      id: 6,
+      plant: "1011",
+      machine: "F",
+      bottle: "28oz Personal Care",
+      customer: "P&G",
+      lot: "AXSM-1006",
+      startDate: "12/7/2025",
+      endDate: "12/8/2025",
+      orderQuantity: 90000,
+      quantityProduced: 90000,
+      status: "Pending",
+      primaryQC: "Ram",
+      backupQC: "Jasdip, Raj",
+      deadline: "12/9/2025",
+      reminder: "Not Sent",
+      escalation: "Not Escalated",
+      urgency: "green",
+      submitted: false,
+      assignmentHistory: []
+    },
+    {
+      id: 7,
+      plant: "1011",
+      machine: "G",
+      bottle: "16oz Household",
+      customer: "P&G",
+      lot: "AXSM-1007",
+      startDate: "12/5/2025",
+      endDate: "12/8/2025",
+      orderQuantity: 85000,
+      quantityProduced: 85000,
+      status: "Pending",
+      primaryQC: "Ram",
+      backupQC: "Jasdip, Raj",
+      deadline: "12/9/2025",
+      reminder: "Not Sent",
+      escalation: "Not Escalated",
+      urgency: "green",
+      submitted: false,
+      assignmentHistory: []
+    },
+    {
+      id: 8,
+      plant: "1006",
+      machine: "H",
+      bottle: "32oz Detergent",
+      customer: "P&G",
+      lot: "AXSM-1008",
+      startDate: "12/7/2025",
+      endDate: "12/8/2025",
+      orderQuantity: 89000,
+      quantityProduced: 89000,
+      status: "Escalated",
+      primaryQC: "Ram",
+      backupQC: "Jasdip, Raj",
+      deadline: "12/8/2025",
+      reminder: "12/9/2025",
+      escalation: "Escalated",
+      urgency: "red",
+      submitted: false,
+      assignmentHistory: []
+    },
+    {
+      id: 9,
+      plant: "1006",
+      machine: "I",
+      bottle: "40oz Industrial",
+      customer: "P&G",
+      lot: "AXSM-1009",
+      startDate: "12/7/2025",
+      endDate: "12/8/2025",
+      orderQuantity: 99000,
+      quantityProduced: 99000,
+      status: "Complete",
+      primaryQC: "Ram",
+      backupQC: "Jasdip, Raj",
+      deadline: "12/9/2025",
+      reminder: "12/9/2025",
+      escalation: "Not Escalated",
+      urgency: "green",
+      submitted: true,
+      assignmentHistory: []
     }
+  ];
 
-    function urgencyIcon(level){
-      if(level === "red") return "🔴";
-      if(level === "yellow") return "🟡";
-      return "🟢";
-    }
+  let dashboardData =
+    JSON.parse(localStorage.getItem("coaDashboardData")) || initialData;
 
-    function statusClass(status){
-      return status.toLowerCase();
-    }
+  let activeAssignmentId = null;
 
-    function render(){
-      const rows = filteredData();
-      body.innerHTML = rows.map(r => `
-        <tr class="${r.escalation === "Escalated" ? "overdue" : ""} ${r.submitted ? "completed-row" : ""}">
-          <td>${r.plant}</td><td>${r.machine}</td><td>${r.bottle}</td><td>${r.customer}</td>
-          <td>${r.lot}</td><td>${r.start}</td><td>${r.end}</td><td>${r.order.toLocaleString()}</td>
-          <td>${r.produced.toLocaleString()}</td>
-          <td><span class="status ${statusClass(r.status)}">${r.status}</span></td>
-          <td>${r.primary}</td><td>${r.backup}</td><td>${r.deadline}</td><td>${r.reminder}</td>
-          <td><span class="status ${r.escalation==="Escalated"?"escalated":"pending"}">${r.escalation}</span></td>
-          <td class="urgency">${urgencyIcon(r.urgency)}</td>
-          <td class="checkbox-cell"><input type="checkbox" ${r.submitted ? "checked" : ""} onchange="toggleSubmitted(${r.id}, this.checked)" /></td>
-        </tr>`).join("");
+  const dashboardBody = document.getElementById("dashboardBody");
+  const roleFilter = document.getElementById("roleFilter");
+  const plantFilter = document.getElementById("plantFilter");
+  const statusFilter = document.getElementById("statusFilter");
+  const searchInput = document.getElementById("searchInput");
 
-      document.getElementById("kpiVisible").textContent = rows.length;
-      document.getElementById("kpiPending").textContent = rows.filter(r=>r.status==="Pending").length;
-      document.getElementById("kpiEscalated").textContent = rows.filter(r=>r.status==="Escalated").length;
-      document.getElementById("kpiComplete").textContent = rows.filter(r=>r.status==="Complete").length;
-      document.getElementById("kpiDueToday").textContent = rows.filter(r=>r.deadline==="12/9/2025" && !r.submitted).length;
-      const complete = rows.filter(r=>r.status==="Complete").length;
-      document.getElementById("kpiRate").textContent = rows.length ? Math.round((complete/rows.length)*100) + "%" : "0%";
+  function saveData() {
+    localStorage.setItem(
+      "coaDashboardData",
+      JSON.stringify(dashboardData)
+    );
+  }
 
-      const role = document.getElementById("role").value;
-      const title = document.getElementById("viewTitle");
-      const subtitle = document.getElementById("viewSubtitle");
-      if(role==="all" || role==="Josh"){
-        title.textContent = role==="Josh" ? "Josh / Superuser Dashboard" : "Superuser Dashboard";
-        subtitle.textContent = "Showing all COA tasks across plants, including escalations.";
-      } else {
-        title.textContent = role + " — Assigned COA Dashboard";
-        subtitle.textContent = "Showing tasks where " + role + " is Primary QC or Backup QC.";
+  function isSuperuser() {
+    return (
+      roleFilter.value === "Superuser" ||
+      roleFilter.value === "Josh"
+    );
+  }
+
+  function urgencyIcon(urgency) {
+    if (urgency === "red") return "🔴";
+    if (urgency === "yellow") return "🟡";
+    return "🟢";
+  }
+
+  function statusClass(status) {
+    if (status === "Complete") return "status-complete";
+    if (status === "Escalated") return "status-escalated";
+    if (status === "Assigned by Superuser") return "status-assigned";
+
+    return "status-pending";
+  }
+
+  function getFilteredData() {
+    const selectedRole = roleFilter.value;
+    const selectedPlant = plantFilter.value;
+    const selectedStatus = statusFilter.value;
+    const searchText = searchInput.value.toLowerCase().trim();
+
+    return dashboardData.filter(function(row) {
+      const roleMatches =
+        isSuperuser() ||
+        row.primaryQC === selectedRole ||
+        row.backupQC.includes(selectedRole);
+
+      const plantMatches =
+        selectedPlant === "All" ||
+        row.plant === selectedPlant;
+
+      const statusMatches =
+        selectedStatus === "All" ||
+        row.status === selectedStatus;
+
+      const searchableText = [
+        row.plant,
+        row.machine,
+        row.bottle,
+        row.customer,
+        row.lot,
+        row.primaryQC,
+        row.backupQC
+      ].join(" ").toLowerCase();
+
+      const searchMatches =
+        !searchText ||
+        searchableText.includes(searchText);
+
+      return (
+        roleMatches &&
+        plantMatches &&
+        statusMatches &&
+        searchMatches
+      );
+    });
+  }
+
+  function renderDashboard() {
+    const rows = getFilteredData();
+
+    dashboardBody.innerHTML = rows.map(function(row) {
+      const rowClass = [
+        row.escalation === "Escalated" ? "escalated-row" : "",
+        row.submitted ? "completed-row" : ""
+      ].join(" ");
+
+      let actionButton = `
+        <button class="btn-disabled" disabled>—</button>
+      `;
+
+      if (
+        isSuperuser() &&
+        row.escalation === "Escalated" &&
+        !row.submitted
+      ) {
+        actionButton = `
+          <button
+            class="btn-assign"
+            onclick="openAssignmentManager(${row.id})"
+          >
+            Assign
+          </button>
+        `;
       }
+
+      return `
+        <tr class="${rowClass}">
+          <td>${row.plant}</td>
+          <td>${row.machine}</td>
+          <td>${row.bottle}</td>
+          <td>${row.customer}</td>
+          <td>${row.lot}</td>
+          <td>${row.startDate}</td>
+          <td>${row.endDate}</td>
+          <td>${row.orderQuantity.toLocaleString()}</td>
+          <td>${row.quantityProduced.toLocaleString()}</td>
+
+          <td>
+            <span class="status ${statusClass(row.status)}">
+              ${row.status}
+            </span>
+          </td>
+
+          <td>${row.primaryQC}</td>
+          <td>${row.backupQC}</td>
+          <td>${row.deadline}</td>
+          <td>${row.reminder}</td>
+
+          <td>
+            <span class="status ${
+              row.escalation === "Escalated"
+                ? "status-escalated"
+                : row.escalation === "Assigned by Superuser"
+                  ? "status-assigned"
+                  : "status-pending"
+            }">
+              ${row.escalation}
+            </span>
+          </td>
+
+          <td class="urgency">
+            ${urgencyIcon(row.urgency)}
+          </td>
+
+          <td>
+            <input
+              class="submit-checkbox"
+              type="checkbox"
+              ${row.submitted ? "checked" : ""}
+              onchange="toggleSubmitted(${row.id}, this.checked)"
+            >
+          </td>
+
+          <td>
+            ${actionButton}
+          </td>
+        </tr>
+      `;
+    }).join("");
+
+    updateKPIs(rows);
+    updateDashboardHeading();
+  }
+
+  function updateKPIs(rows) {
+    const pending = rows.filter(function(row) {
+      return row.status === "Pending";
+    }).length;
+
+    const escalated = rows.filter(function(row) {
+      return row.status === "Escalated";
+    }).length;
+
+    const completed = rows.filter(function(row) {
+      return row.status === "Complete";
+    }).length;
+
+    const dueToday = rows.filter(function(row) {
+      return (
+        row.deadline === "12/9/2025" &&
+        !row.submitted
+      );
+    }).length;
+
+    const rate = rows.length
+      ? Math.round((completed / rows.length) * 100)
+      : 0;
+
+    document.getElementById("visibleCount").textContent = rows.length;
+    document.getElementById("pendingCount").textContent = pending;
+    document.getElementById("escalatedCount").textContent = escalated;
+    document.getElementById("completedCount").textContent = completed;
+    document.getElementById("dueTodayCount").textContent = dueToday;
+    document.getElementById("completionRate").textContent = rate + "%";
+  }
+
+  function updateDashboardHeading() {
+    const title = document.getElementById("dashboardTitle");
+    const subtitle = document.getElementById("dashboardSubtitle");
+
+    if (isSuperuser()) {
+      title.textContent =
+        roleFilter.value === "Josh"
+          ? "Josh / Superuser Dashboard"
+          : "Superuser Dashboard";
+
+      subtitle.textContent =
+        "Showing all COA tasks, escalations and reassignment controls.";
+    } else {
+      title.textContent =
+        roleFilter.value + " — Assigned COA Dashboard";
+
+      subtitle.textContent =
+        "Showing COAs where this user is the Primary or Backup QC.";
     }
+  }
 
-    function persist(){
-      localStorage.setItem("coaDemoData", JSON.stringify(data));
-    }
-
-    function toast(message){
-      const el = document.getElementById("toast");
-      el.textContent = message;
-      el.style.display = "block";
-      setTimeout(()=>el.style.display="none",2500);
-    }
-
-    window.toggleSubmitted = function(id, checked){
-      const row = data.find(x=>x.id===id);
-      if(!row) return;
-      row.submitted = checked;
-      row.status = checked ? "Complete" : "Pending";
-      row.escalation = checked ? "Not Escalated" : row.escalation;
-      row.urgency = checked ? "green" : row.urgency;
-      persist();
-      render();
-      toast(checked ? "COA marked submitted and removed from active workload." : "COA reopened.");
-    };
-
-    ["role","plant","statusFilter","search"].forEach(id=>{
-      document.getElementById(id).addEventListener(id==="search"?"input":"change",render);
+  window.toggleSubmitted = function(id, checked) {
+    const row = dashboardData.find(function(item) {
+      return item.id === id;
     });
 
-    document.getElementById("resetBtn").onclick = ()=>{
-      document.getElementById("role").value="all";
-      document.getElementById("plant").value="all";
-      document.getElementById("statusFilter").value="all";
-      document.getElementById("search").value="";
-      render();
-    };
+    if (!row) return;
 
-    const modal = document.getElementById("modal");
-    document.getElementById("addBtn").onclick=()=>modal.style.display="flex";
-    document.getElementById("cancelModal").onclick=()=>modal.style.display="none";
-    modal.addEventListener("click",e=>{if(e.target===modal) modal.style.display="none"});
+    row.submitted = checked;
 
-    document.getElementById("submitRequest").onclick=()=>{
-      const plant=document.getElementById("mPlant").value;
-      const machine=document.getElementById("mMachine").value.trim()||"M";
-      const bottle=document.getElementById("mBottle").value.trim()||"Manual Request Item";
-      const customer=document.getElementById("mCustomer").value.trim()||"Customer";
-      const lot=document.getElementById("mLot").value.trim()||("MAN-"+Date.now().toString().slice(-5));
-      const qty=Number(document.getElementById("mQty").value)||0;
-      const primary=document.getElementById("mPrimary").value;
-      const backup=document.getElementById("mBackup").value;
+    if (checked) {
+      row.status = "Complete";
+      row.escalation = "Not Escalated";
+      row.urgency = "green";
+      row.reminder = "COA submitted";
+    } else {
+      row.status = "Pending";
+      row.reminder = "Task reopened";
+    }
 
-      data.unshift({
-        id:Date.now(),plant,machine,bottle,customer,lot,
-        start:"12/9/2025",end:"12/9/2025",order:qty,produced:qty,
-        status:"Pending",primary,backup,deadline:"12/10/2025",
-        reminder:"Sent on submission",escalation:"Not Escalated",
-        urgency:"green",submitted:false
+    saveData();
+    renderDashboard();
+
+    showToast(
+      checked
+        ? "COA marked as submitted."
+        : "COA task reopened."
+    );
+  };
+
+  window.openAssignmentManager = function(id) {
+    if (!isSuperuser()) {
+      showToast("Only a Superuser can reassign an escalated COA.");
+      return;
+    }
+
+    const row = dashboardData.find(function(item) {
+      return item.id === id;
+    });
+
+    if (!row || row.escalation !== "Escalated") return;
+
+    activeAssignmentId = id;
+
+    document.getElementById("assignmentPlant").textContent =
+      row.plant;
+
+    document.getElementById("assignmentMachine").textContent =
+      row.machine;
+
+    document.getElementById("assignmentBottle").textContent =
+      row.bottle;
+
+    document.getElementById("assignmentLot").textContent =
+      row.lot;
+
+    document.getElementById("assignmentCurrentOwner").textContent =
+      row.primaryQC;
+
+    document.getElementById("assignmentEscalation").textContent =
+      row.escalation;
+
+    document.getElementById("assignTo").value =
+      row.primaryQC;
+
+    const firstBackup = row.backupQC.split(",")[0].trim();
+
+    const backupOptions =
+      Array.from(document.getElementById("assignBackup").options);
+
+    if (
+      backupOptions.some(function(option) {
+        return option.value === firstBackup;
+      })
+    ) {
+      document.getElementById("assignBackup").value =
+        firstBackup;
+    }
+
+    document.getElementById("assignmentComments").value = "";
+
+    renderAssignmentHistory(row);
+
+    document.getElementById("assignmentModal").style.display =
+      "flex";
+  };
+
+  function renderAssignmentHistory(row) {
+    const historyContainer =
+      document.getElementById("assignmentHistory");
+
+    const history = row.assignmentHistory || [];
+
+    if (!history.length) {
+      historyContainer.innerHTML = `
+        <div class="history-item">
+          No previous reassignment history.
+        </div>
+      `;
+
+      return;
+    }
+
+    historyContainer.innerHTML = [...history]
+      .reverse()
+      .map(function(item) {
+        return `
+          <div class="history-item">
+            <strong>${item.from}</strong>
+            →
+            <strong>${item.to}</strong>
+            <br>
+
+            ${item.date} by ${item.assignedBy}
+
+            ${
+              item.comments
+                ? `<br>Comments: ${item.comments}`
+                : ""
+            }
+          </div>
+        `;
+      })
+      .join("");
+  }
+
+  document
+    .getElementById("saveAssignmentButton")
+    .addEventListener("click", function() {
+      const row = dashboardData.find(function(item) {
+        return item.id === activeAssignmentId;
       });
-      persist();
-      modal.style.display="none";
-      render();
-      toast("Manual COA request created; Primary and Backup QC notified.");
-    };
 
-    render();
-  </script>
+      if (!row) return;
+
+      const newOwner =
+        document.getElementById("assignTo").value;
+
+      const newBackup =
+        document.getElementById("assignBackup").value;
+
+      const comments =
+        document
+          .getElementById("assignmentComments")
+          .value
+          .trim();
+
+      const originalOwner = row.primaryQC;
+
+      if (newOwner === originalOwner) {
+        showToast("Please select a different Primary QC user.");
+        return;
+      }
+
+      row.assignmentHistory =
+        row.assignmentHistory || [];
+
+      row.assignmentHistory.push({
+        from: originalOwner,
+        to: newOwner,
+        assignedBy: "Josh / Superuser",
+        date: new Date().toLocaleString(),
+        comments: comments
+      });
+
+      row.primaryQC = newOwner;
+      row.backupQC = newBackup;
+      row.status = "Pending";
+      row.escalation = "Assigned by Superuser";
+      row.urgency = "yellow";
+      row.reminder = "Reassignment alert sent";
+
+      const notifyNew =
+        document.getElementById("notifyNewOwner").checked;
+
+      const notifyOriginal =
+        document.getElementById("notifyOriginalOwner").checked;
+
+      saveData();
+
+      document.getElementById("assignmentModal").style.display =
+        "none";
+
+      activeAssignmentId = null;
+
+      renderDashboard();
+
+      let message =
+        "COA reassigned from " +
+        originalOwner +
+        " to " +
+        newOwner +
+        ".";
+
+      if (notifyNew || notifyOriginal) {
+        message += " Notification simulated.";
+      }
+
+      showToast(message);
+    });
+
+  document
+    .getElementById("cancelAssignmentButton")
+    .addEventListener("click", function() {
+      document.getElementById("assignmentModal").style.display =
+        "none";
+
+      activeAssignmentId = null;
+    });
+
+  document
+    .getElementById("manualRequestButton")
+    .addEventListener("click", function() {
+      document.getElementById("manualRequestModal").style.display =
+        "flex";
+    });
+
+  document
+    .getElementById("cancelManualButton")
+    .addEventListener("click", function() {
+      document.getElementById("manualRequestModal").style.display =
+        "none";
+    });
+
+  document
+    .getElementById("submitManualButton")
+    .addEventListener("click", function() {
+      const quantity =
+        Number(document.getElementById("manualQuantity").value) || 0;
+
+      const newRequest = {
+        id: Date.now(),
+        plant: document.getElementById("manualPlant").value,
+        machine:
+          document.getElementById("manualMachine").value.trim() ||
+          "M",
+        bottle:
+          document.getElementById("manualBottle").value.trim() ||
+          "Manual COA Request",
+        customer:
+          document.getElementById("manualCustomer").value.trim() ||
+          "Customer",
+        lot:
+          document.getElementById("manualLot").value.trim() ||
+          "MAN-" + Date.now().toString().slice(-5),
+        startDate: "12/9/2025",
+        endDate: "12/9/2025",
+        orderQuantity: quantity,
+        quantityProduced: quantity,
+        status: "Pending",
+        primaryQC:
+          document.getElementById("manualPrimary").value,
+        backupQC:
+          document.getElementById("manualBackup").value,
+        deadline: "12/10/2025",
+        reminder: "Notification sent",
+        escalation: "Not Escalated",
+        urgency: "green",
+        submitted: false,
+        assignmentHistory: []
+      };
+
+      dashboardData.unshift(newRequest);
+
+      saveData();
+
+      document.getElementById("manualRequestModal").style.display =
+        "none";
+
+      renderDashboard();
+
+      showToast(
+        "Manual COA request created. Primary and Backup QC notified."
+      );
+    });
+
+  function showToast(message) {
+    const toast = document.getElementById("toast");
+
+    toast.textContent = message;
+    toast.style.display = "block";
+
+    setTimeout(function() {
+      toast.style.display = "none";
+    }, 2800);
+  }
+
+  function resetFilters() {
+    roleFilter.value = "Superuser";
+    plantFilter.value = "All";
+    statusFilter.value = "All";
+    searchInput.value = "";
+
+    renderDashboard();
+  }
+
+  roleFilter.addEventListener("change", renderDashboard);
+  plantFilter.addEventListener("change", renderDashboard);
+  statusFilter.addEventListener("change", renderDashboard);
+  searchInput.addEventListener("input", renderDashboard);
+
+  document
+    .getElementById("resetButton")
+    .addEventListener("click", resetFilters);
+
+  document
+    .getElementById("assignmentModal")
+    .addEventListener("click", function(event) {
+      if (event.target === this) {
+        this.style.display = "none";
+        activeAssignmentId = null;
+      }
+    });
+
+  document
+    .getElementById("manualRequestModal")
+    .addEventListener("click", function(event) {
+      if (event.target === this) {
+        this.style.display = "none";
+      }
+    });
+
+  renderDashboard();
+</script>
+
 </body>
 </html>
